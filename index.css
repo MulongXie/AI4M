@@ -32,9 +32,12 @@ Font
 /***
 ****** Specific ******
 ***/
-#side_anv{
+/* Left sidebar */
+#left-sidebar{
     background-color: white;
     color: var(--primary);
+    position: relative;
+    padding: 0;
 }
 
 .brand{
@@ -42,13 +45,52 @@ Font
 }
 
 .brand-logo{
-    width: 80%;
+    width: 70%;
     margin-bottom: 15px;
 }
 
 .brand-title{
     font-weight: bold;
     font-size: 25px;
+}
+
+.user{
+    padding-top: 100px;
+}
+
+.user-icon{
+    width: 30%;
+    /*border: solid 5px var(--primary);*/
+    border-radius: 40%;
+}
+
+.conversation-opts{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.lef-navbar{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-nav{
+    border-top: solid 2px var(--primary);
+    width: 100%;
+    /*border-bottom: solid 2px var(--primary);*/
+}
+
+.my-nav-item{
+    width: 100%;
+    /*border-top: solid 2px var(--primary);*/
+    height: 60px;
+    padding: 12px;
+    font-weight: bold;
 }
 
 #chat_container{
