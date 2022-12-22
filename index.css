@@ -1,0 +1,18 @@
+:root{
+    --primary: #00a8ce;
+    --secondary: #FF6A3D;
+}
+
+.one-page{
+    height: 100vh;
+}
+
+#chat_container{
+    background: var(--primary);
+    background: linear-gradient(90deg, rgba(0,168,206,1) 0%, rgba(1,199,244,1) 100%);
+}
+
+#side_anv{
+    background-color: whitesmoke;
+    color: var(--primary);
+}
