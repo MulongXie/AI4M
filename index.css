@@ -57,7 +57,7 @@ Font
 
 .brand-title{
     font-weight: bold;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .user{
@@ -67,6 +67,7 @@ Font
 .user-info{
     font-weight: bold;
     margin-bottom: 10px;
+    font-size: 20px;
 }
 
 .user-role{
@@ -74,7 +75,7 @@ Font
 }
 
 .user-icon{
-    width: 30%;
+    width: 70px;
     /*border: solid 5px var(--primary);*/
     border-radius: 40%;
     margin-bottom: 10px;
