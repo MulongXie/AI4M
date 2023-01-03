@@ -21,4 +21,20 @@ $(document).ready(()=>{
     $('.user-icon-nonselect').click(() => {
     })
 
+    $('#conversation-history').click(() =>{
+        let right = $('#right-sidebar')
+        let chat = $('#chat_container')
+
+
+        if (right.is(':visible')){
+            chat.addClass('col-10')
+            chat.removeClass('col-8')
+            right.hide()
+        }
+        else {
+            chat.addClass('col-8')
+            chat.removeClass('col-10')
+            right.show()
+        }
+    })
 })
