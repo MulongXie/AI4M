@@ -25,16 +25,17 @@ $(document).ready(()=>{
         let right = $('#right-sidebar')
         let chat = $('#chat_container')
 
+        // right.animate({width: 'toggle'}, 350)
 
-        if (right.is(':visible')){
-            chat.addClass('col-10')
-            chat.removeClass('col-8')
-            right.hide()
+        console.log(right.is(':visible'))
+
+        if (! right.hasClass('hidden')){
+            right.animate({"margin-right": '-=270'})
+            right.addClass('hidden')
         }
         else {
-            chat.addClass('col-8')
-            chat.removeClass('col-10')
-            right.show()
+            right.animate({"margin-right": '+=270'})
+            right.removeClass('hidden')
         }
     })
 })
