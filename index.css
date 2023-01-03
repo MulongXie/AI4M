@@ -1,6 +1,7 @@
 :root{
     --primary: #00a8ce;
     --secondary: #edc7b7;
+    --third: #00838d;
 }
 
 body{
@@ -151,4 +152,97 @@ Font
 #chat_container{
     background: var(--primary);
     background: linear-gradient(90deg, rgba(0,168,206,1) 0%, rgba(1,199,244,1) 100%);
+}
+
+/* Right sidebar */
+#right-sidebar{
+    height: 100vh;
+    overflow: auto;
+}
+
+.rightbar-title-container{
+    padding-top: 10px;
+    width: 100%;
+    text-align: center;
+    /*border-bottom: solid 2px var(--secondary);*/
+}
+
+.rightbar-title{
+    color: var(--primary);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Conversation Card */
+.conversation-card {
+    display: block;
+    position: relative;
+    max-width: 262px;
+    background-color: #f2f8f9;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+    cursor: pointer;
+    color: dimgray;
+}
+
+.conversation-card:before {
+     content: "";
+     position: absolute;
+     z-index: -1;
+     top: -16px;
+     right: -16px;
+     background: var(--third);
+     height: 32px;
+     width: 32px;
+     border-radius: 32px;
+     transform: scale(1);
+     transform-origin: 50% 50%;
+     transition: transform 0.25s ease-out;
+}
+
+.conversation-card:hover:before {
+     transform: scale(21);
+ }
+
+.conversation-card:hover p{
+    transition: all 0.3s ease-out;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.conversation-card:hover .con-card-subtitle{
+    color: var(--secondary);
+}
+
+.con-card-title{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.con-card-subtitle{
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.go-corner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    background-color: var(--third);
+    border-radius: 0 4px 0 32px;
+}
+
+.go-arrow {
+    margin-top: -4px;
+    margin-right: -4px;
+    color: white;
 }
