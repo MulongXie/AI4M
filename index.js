@@ -12,9 +12,9 @@ $(document).ready(()=>{
         $('.user-icon-nonselect').css({
             'transform': 'translateX(-35px)'
         })
-        $('.user-icon-select').css({
-            'box-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
-        })
+        // $('.user-icon-select').css({
+        //     'box-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
+        // })
     })
 
     // Switch user
