@@ -101,13 +101,19 @@ Font
 .user-icon-select{
     /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
     border: solid 5px var(--secondary);
-    transform: translateX(35px);
     z-index: 1;
 }
 
 .user-icon-nonselect{
     border: solid 5px white;
     z-index: 0;
+}
+
+.user-icon-enquirer{
+    transform: translateX(35px);
+}
+
+.user-icon-expertise{
     transform: translateX(-35px);
 }
 

@@ -1,24 +1,43 @@
 $(document).ready(()=>{
 
+    let userType = 'Enquire'
     // Slide user type while hovering
-    $('.user-icon-container').hover(() =>{
-        $('.user-icon-nonselect').css({
+    $('.user-icon-container').hover(function (){
+        $('.user-icon-nonselect.user-icon-expertise').css({
             'transform': 'translateX(40px)'
         })
-        $('.user-icon-select').css({
-            'box-shadow': 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
+        $('.user-icon-nonselect.user-icon-enquirer').css({
+            'transform': 'translateX(115px)'
         })
-    }, ()=>{
-        $('.user-icon-nonselect').css({
+    }, function (){
+        $('.user-icon-nonselect.user-icon-expertise').css({
             'transform': 'translateX(-35px)'
         })
-        // $('.user-icon-select').css({
-        //     'box-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
-        // })
+        $('.user-icon-nonselect.user-icon-enquirer').css({
+            'transform': 'translateX(35px)'
+        })
     })
-
+    
     // Switch user
-    $('.user-icon-nonselect').click(() => {
+    $(document).on('click', '.user-icon-nonselect', function (){
+        $('.user-icon-select').addClass('user-icon-nonselect')
+        $('.user-icon-select').removeClass('user-icon-select')
+
+        $(this).addClass('user-icon-select')
+        $(this).removeClass('user-icon-nonselect')
+        if ($(this).hasClass('user-icon-expertise')){
+            $(this).css({
+                'transform': 'translateX(-35px)'
+            })
+            userType = 'Expertise'
+        }
+        else if ($(this).hasClass('user-icon-enquirer')){
+            $(this).css({
+                'transform': 'translateX(35px)'
+            })
+            userType = 'Enquire'
+        }
+        $('.user-role').text(userType)
     })
 
     $('#conversation-history').click(() =>{
