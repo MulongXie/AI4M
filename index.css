@@ -158,7 +158,26 @@ Font
     background: var(--primary);
     background: linear-gradient(90deg, rgba(0,168,206,1) 0%, rgba(1,199,244,1) 100%);
     overflow: hidden;
+    position: relative;
 }
+
+/* Middle page */
+#middle-page{
+    height: 100%;
+    width: 100%;
+    /*background: greenyellow;*/
+}
+
+.conversation-display{
+    height: 90%;
+    width: 100%;
+}
+
+.my-input{
+    width: 70%;
+    margin: auto;
+}
+
 
 /* Right sidebar */
 #right-sidebar{
@@ -168,6 +187,9 @@ Font
     background: white;
     float: right;
     margin-right: -270px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .rightbar-title-container{

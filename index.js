@@ -40,21 +40,20 @@ $(document).ready(()=>{
         $('.user-role').text(userType)
     })
 
+    // click to show right bar conversation history
     $('#conversation-history').click(() =>{
         let right = $('#right-sidebar')
-        let chat = $('#chat_container')
-
-        // right.animate({width: 'toggle'}, 350)
-
-        console.log(right.is(':visible'))
+        let middle = $('#middle-page')
 
         if (! right.hasClass('hidden')){
             right.animate({"margin-right": '-=270'})
             right.addClass('hidden')
+            middle.animate({'width': '+=270'})
         }
         else {
             right.animate({"margin-right": '+=270'})
             right.removeClass('hidden')
+            middle.animate({'width': '-=270'})
         }
     })
 })
