@@ -173,9 +173,20 @@ Font
     width: 100%;
 }
 
-.my-input{
+.input-msg{
     width: 70%;
     margin: auto;
+}
+
+.btn-msg{
+    background: var(--third);
+    transition: 0.5s;
+    color: white;
+}
+
+.btn-msg:hover{
+    background: #00838d80;
+    color: white;
 }
 
 
