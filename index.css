@@ -95,6 +95,7 @@ Font
 
 .user-icon:hover{
     cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .user-icon-select{
@@ -108,10 +109,6 @@ Font
     border: solid 5px white;
     z-index: 0;
     transform: translateX(-35px);
-}
-
-.user-icon-nonselect:hover{
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .conversation-opts{
