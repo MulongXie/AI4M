@@ -57,7 +57,7 @@ Font
 }
 
 .brand-logo{
-    width: 70%;
+    width: 160px;
     margin-bottom: 15px;
 }
 
@@ -183,9 +183,10 @@ Font
 .conversation-dialog{
     min-height: 100px;
     width: 80%;
-    background: white;
+    /*background: white;*/
     margin: auto auto 20px;
-    padding: 20px 20px 5px;
+    padding: 20px;
+    display: flex;
 }
 
 .dialog-portrait{
@@ -195,15 +196,31 @@ Font
 }
 
 .dialog-portrait-name{
-    color: var(--third);
+    color: var(--secondary);
     font-weight: bold;
+    margin: 0;
 }
 
 .dialog-portrait-img{
-    height: 70px;
-    width: 70px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     border: 4px solid var(--secondary);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.dialog-msg-wrapper{
+    /*background-color: lawngreen;*/
+    padding: 10px;
+    width: 100%;
+}
+
+.dialog-msg{
+    background-color: var(--third);
+    color: white;
+    padding: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 6px;
 }
 
 /* Input bar */
