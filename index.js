@@ -11,10 +11,10 @@ $(document).ready(()=>{
         })
     }, function (){
         $('.user-icon-nonselect.user-icon-expertise').css({
-            'transform': 'translateX(-35px)'
+            'transform': 'translateX(-37px)'
         })
         $('.user-icon-nonselect.user-icon-enquirer').css({
-            'transform': 'translateX(35px)'
+            'transform': 'translateX(37px)'
         })
     })
     
@@ -27,13 +27,13 @@ $(document).ready(()=>{
         $(this).removeClass('user-icon-nonselect')
         if ($(this).hasClass('user-icon-expertise')){
             $(this).css({
-                'transform': 'translateX(-35px)'
+                'transform': 'translateX(-37px)'
             })
             userType = 'Expertise'
         }
         else if ($(this).hasClass('user-icon-enquirer')){
             $(this).css({
-                'transform': 'translateX(35px)'
+                'transform': 'translateX(37px)'
             })
             userType = 'Enquire'
         }

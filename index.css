@@ -92,6 +92,7 @@ Font
     border-radius: 20%;
     transition: 0.5s;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .user-icon:hover{
@@ -111,11 +112,11 @@ Font
 }
 
 .user-icon-enquirer{
-    transform: translateX(35px);
+    transform: translateX(37px);
 }
 
 .user-icon-expertise{
-    transform: translateX(-35px);
+    transform: translateX(-37px);
 }
 
 .conversation-opts{
@@ -160,6 +161,7 @@ Font
     background: linear-gradient(90deg, rgba(0,168,206,1) 0%, rgba(1,199,244,1) 100%);
     overflow: hidden;
     position: relative;
+    z-index: -1;
 }
 
 /*** Middle page ***/
