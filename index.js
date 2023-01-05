@@ -44,16 +44,27 @@ $(document).ready(()=>{
     $('#conversation-history').click(() =>{
         let right = $('#right-sidebar')
         let middle = $('#middle-page')
-
+        // hide
         if (! right.hasClass('hidden')){
             right.animate({"margin-right": '-=270'})
             right.addClass('hidden')
             middle.animate({'width': '+=270'})
         }
+        // show
         else {
             right.animate({"margin-right": '+=270'})
             right.removeClass('hidden')
             middle.animate({'width': '-=270'})
+        }
+    })
+    // hide the right bar while clicking on the middle page
+    $('#middle-page').click(function (){
+        let right = $('#right-sidebar')
+        let middle = $('#middle-page')
+        if (! right.hasClass('hidden')){
+            right.animate({"margin-right": '-=270'})
+            right.addClass('hidden')
+            middle.animate({'width': '+=270'})
         }
     })
 })

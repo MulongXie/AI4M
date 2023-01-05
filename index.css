@@ -2,6 +2,7 @@
     --primary: #00a8ce;
     --secondary: #edc7b7;
     --third: #00838d;
+    --gray: #f2f8f9;
 }
 
 body{
@@ -221,7 +222,7 @@ Font
     display: block;
     position: relative;
     max-width: 262px;
-    background-color: #f2f8f9;
+    background-color: var(--gray);
     border-radius: 4px;
     padding: 20px;
     margin: 12px;
