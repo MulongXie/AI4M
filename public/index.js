@@ -134,5 +134,20 @@ $(document).ready(()=>{
             conversation.push(dialog)
         }
         console.log(conversation)
+
+        $.ajax({
+            url: '/exportConv',
+            type: 'post',
+            data: {
+                'conversation': JSON.stringify(conversation)
+            },
+            success: function (res){
+                console.log(res)
+            },
+            error: function (res){
+                alert('Error')
+                console.log(res)
+            }
+        })
     })
 })
