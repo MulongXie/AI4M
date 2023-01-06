@@ -73,13 +73,20 @@ $(document).ready(()=>{
 
     // *** conversation transmission ***
     $('#msgForm').submit(function (e){
+        // * display the input message in the conversation wrapper
+        let currentDialog = $('.conversation-dialog').last()
+        // if send from the same user, append message in current dialog
+        if (currentDialog.attr('role') === userType){
+            currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ $('#msgInput').val() +"</p>")
+        }
+
+        // * send input message to server through ajax
         e.preventDefault()
         $.ajax({
             url: '/sendMsg',
             type: 'post',
             data: $(this).serialize(),
             success: function (res){
-                console.log(res)
                 $('#msgInput').val('')
             },
             error: function (res){
