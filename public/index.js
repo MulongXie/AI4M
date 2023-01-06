@@ -80,6 +80,7 @@ $(document).ready(()=>{
             data: $(this).serialize(),
             success: function (res){
                 console.log(res)
+                $('#msgInput').val('')
             },
             error: function (res){
                 alert('Error')
