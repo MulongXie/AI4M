@@ -1,28 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Node JS Express Form Submission Example - ItSolutionStuff.com</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#test-btn").click(function(){
+                $.ajax({
+                    url: "/proc",
+                    type: 'post',
+                    data: {
+                        lala:'a'
+                    },
+                    success: function (result) {
+                        console.log(result)
+                        $("#div1").html(result.data);
+                    },
+                    error: function (data) {
+                        // Some error in ajax call
+                        alert("some Error");
+                    }
+                })
+            });
+
+            $('#formId').submit(function (e){
+                e.preventDefault();
+                alert('submit')
+                $.ajax({
+                    url: "/proc",
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        console.log(result)
+                        $("#div1").html(result.data);
+                    },
+                    error: function (data) {
+                        // Some error in ajax call
+                        alert("some Error");
+                    }
+                })
+            })
+        });
+    </script>
 </head>
 <body>
-<div class="container">
-    <h1>Node JS Express Form Submission Example - ItSolutionStuff.com</h1>
-    <form action="/" method="POST">
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="Enter first name" name="first_name">
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Enter last name" name="last_name">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" placeholder="Enter email">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+
+<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+<button id="test-btn">Get External Content</button>
+
+<form id='formId' action='/' method="post"> Name:
+    <input type='text'
+           id='nm'
+           name='nm'>
+    </input>
+    <br> Student ID:
+    <input type='text'
+           id='studentId'
+           name='studentId'>
+    </input>
+    <br> Contact No. :
+    <input type='text'
+           id='contactNumber'
+           name='contactNumber'>
+    </input>
+    <br>
+    <button id='submitButton' type="submit">
+        Submit
+    </button>
+</form>
+
 </body>
 </html>

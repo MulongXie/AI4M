@@ -1,5 +1,6 @@
 $(document).ready(()=>{
 
+    // *** Switch user in left-bar ***
     let userType = 'Enquire'
     // Slide user type while hovering
     $('.user-icon-container').hover(function (){
@@ -17,7 +18,6 @@ $(document).ready(()=>{
             'transform': 'translateX(37px)'
         })
     })
-    
     // Switch user
     $(document).on('click', '.user-icon-nonselect', function (){
         $('.user-icon-select').addClass('user-icon-nonselect')
@@ -40,6 +40,8 @@ $(document).ready(()=>{
         $('.user-role').text(userType)
     })
 
+
+    // *** Click to show the right-bar ***
     // click to show right bar conversation history
     $('#conversation-history').click(() =>{
         let right = $('#right-sidebar')
@@ -66,5 +68,23 @@ $(document).ready(()=>{
             right.addClass('hidden')
             middle.animate({'width': '+=270'})
         }
+    })
+
+
+    // *** conversation transmission ***
+    $('#msgForm').submit(function (e){
+        e.preventDefault()
+        $.ajax({
+            url: '/sendMsg',
+            type: 'post',
+            data: $(this).serialize(),
+            success: function (res){
+                console.log(res)
+            },
+            error: function (res){
+                alert('Error')
+                console.log(res)
+            }
+        })
     })
 })
