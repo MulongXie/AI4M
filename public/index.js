@@ -77,9 +77,10 @@ $(document).ready(()=>{
         // * display the input message in the conversation wrapper
         let currentDialog = $('.conversation-dialog').last()
         let convWrapper = $('.conversation-wrapper')
+        let msgInput = $('#msgInput')
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
-            currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ $('#msgInput').val() +"</p>")
+            currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ msgInput.val() +"</p>")
         }
         // else create a new dialog
         else{
@@ -90,7 +91,7 @@ $(document).ready(()=>{
                 "        <p class=\"dialog-portrait-name\">" + userType + "</p>\n" +
                 "    </div>\n" +
                 "    <div class=\"dialog-msg-wrapper\">\n" +
-                "        <p class=\"dialog-msg\">\n" + $('#msgInput').val() +
+                "        <p class=\"dialog-msg\">\n" + msgInput.val() +
                 "        </p>\n" +
                 "    </div>\n" +
                 "</div>"
@@ -105,9 +106,12 @@ $(document).ready(()=>{
         $.ajax({
             url: '/sendMsg',
             type: 'post',
-            data: $(this).serialize(),
+            data:{
+                'user': userType,
+                'message': msgInput.val()
+            },
             success: function (res){
-                $('#msgInput').val('')
+                msgInput.val('')
             },
             error: function (res){
                 alert('Error')
