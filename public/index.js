@@ -91,8 +91,7 @@ $(document).ready(()=>{
                 "        <p class=\"dialog-portrait-name\">" + userType + "</p>\n" +
                 "    </div>\n" +
                 "    <div class=\"dialog-msg-wrapper\">\n" +
-                "        <p class=\"dialog-msg\">\n" + msgInput.val() +
-                "        </p>\n" +
+                "        <p class=\"dialog-msg\">" + msgInput.val() + "</p>\n" +
                 "    </div>\n" +
                 "</div>"
             convWrapper.append(dialog)
@@ -118,5 +117,22 @@ $(document).ready(()=>{
                 console.log(res)
             }
         })
+    })
+
+    // export conversation
+    $('#conversation-export').click(function (){
+        // extract user and messages
+        let convWrapper = $('.conversation-wrapper')
+        let conversation = []  // [{'user':, 'message':[]}]
+        for (let i = 0; i < convWrapper.children().length; i++){
+            let dialogWrapper = $(convWrapper.children()[i])
+            let messageWrapper = dialogWrapper.find('.dialog-msg')
+            let dialog = {'user': dialogWrapper.attr('data-role'), 'message':[]}
+            for (let j = 0; j < messageWrapper.length; j ++){
+                dialog.message.push($(messageWrapper[j]).text())
+            }
+            conversation.push(dialog)
+        }
+        console.log(conversation)
     })
 })
