@@ -1,7 +1,7 @@
 $(document).ready(()=>{
 
     // *** Switch user in left-bar ***
-    let userType = 'Enquire'
+    let userType = 'Enquirer'
     // Slide user type while hovering
     $('.user-icon-container').hover(function (){
         $('.user-icon-nonselect.user-icon-expertise').css({
@@ -35,7 +35,7 @@ $(document).ready(()=>{
             $(this).css({
                 'transform': 'translateX(37px)'
             })
-            userType = 'Enquire'
+            userType = 'Enquirer'
         }
         $('.user-role').text(userType)
     })
@@ -76,8 +76,23 @@ $(document).ready(()=>{
         // * display the input message in the conversation wrapper
         let currentDialog = $('.conversation-dialog').last()
         // if send from the same user, append message in current dialog
-        if (currentDialog.attr('role') === userType){
+        if (currentDialog.attr('data-role') === userType){
             currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ $('#msgInput').val() +"</p>")
+        }
+        // else create a new dialog
+        else{
+            let dialog =
+                "<div class=\"conversation-dialog dialog-" + userType.toLowerCase() + "\" data-role=\"" + userType + "\">\n" +
+                "    <div class=\"dialog-portrait\">\n" +
+                "        <img src=\"images/" + userType.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
+                "        <p class=\"dialog-portrait-name\">" + userType + "</p>\n" +
+                "    </div>\n" +
+                "    <div class=\"dialog-msg-wrapper\">\n" +
+                "        <p class=\"dialog-msg\">\n" + $('#msgInput').val() +
+                "        </p>\n" +
+                "    </div>\n" +
+                "</div>"
+            $('.conversation-wrapper').append(dialog)
         }
 
         // * send input message to server through ajax
