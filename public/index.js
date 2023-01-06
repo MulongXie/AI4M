@@ -72,6 +72,7 @@ $(document).ready(()=>{
 
 
     // *** conversation transmission ***
+    // input message
     $('#msgForm').submit(function (e){
         // * display the input message in the conversation wrapper
         let currentDialog = $('.conversation-dialog').last()
@@ -94,6 +95,9 @@ $(document).ready(()=>{
                 "</div>"
             $('.conversation-wrapper').append(dialog)
         }
+        $('.conversation-wrapper').animate({
+            scrollTop: $('.conversation-wrapper').prop('scrollHeight')
+        }, 500)
 
         // * send input message to server through ajax
         e.preventDefault()
