@@ -190,7 +190,7 @@ Font
 }
 
 /* Conversation dialog */
-.conversation-display{
+.conversation-wrapper{
     height: 100vh;
     width: 100%;
     padding-top: 10px;
