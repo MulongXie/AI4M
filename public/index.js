@@ -76,6 +76,7 @@ $(document).ready(()=>{
     $('#msgForm').submit(function (e){
         // * display the input message in the conversation wrapper
         let currentDialog = $('.conversation-dialog').last()
+        let convWrapper = $('.conversation-wrapper')
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
             currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ $('#msgInput').val() +"</p>")
@@ -93,10 +94,10 @@ $(document).ready(()=>{
                 "        </p>\n" +
                 "    </div>\n" +
                 "</div>"
-            $('.conversation-wrapper').append(dialog)
+            convWrapper.append(dialog)
         }
-        $('.conversation-wrapper').animate({
-            scrollTop: $('.conversation-wrapper').prop('scrollHeight')
+        convWrapper.animate({
+            scrollTop: convWrapper.prop('scrollHeight')
         }, 500)
 
         // * send input message to server through ajax
