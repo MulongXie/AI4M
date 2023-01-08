@@ -39,6 +39,11 @@ $(document).ready(()=>{
         }
         $('.user-role').text(userType)
     })
+    // clear conversation
+    $('#conversation-clear').click(function (){
+        $('.conversation-wrapper').empty('')
+        console.log('clear')
+    })
 
 
     // *** Click to show the right-bar ***
@@ -154,5 +159,11 @@ $(document).ready(()=>{
                 console.log(res)
             }
         })
+    })
+
+    // import conversation Json
+    $('#importInput').change(function (){
+        alert('Import successfully')
+        console.log($(this).prop('files'))
     })
 })
