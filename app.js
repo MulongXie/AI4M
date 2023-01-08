@@ -27,6 +27,9 @@ app.post('/exportConv', urlencodedParser, function (req, res){
         if (err) throw err;
         console.log('Saved json to ' + jsonFileName);
     })
+    setTimeout(function (){
+        fs.unlinkSync(jsonFileName)
+    }, 5000)
     res.json({jsonFile: jsonFileName});
 })
 
