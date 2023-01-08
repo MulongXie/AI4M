@@ -20,7 +20,7 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
 
 app.post('/exportConv', urlencodedParser, function (req, res){
     let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
-    let conversation = JSON.stringify(req.body)
+    let conversation = JSON.stringify(req.body, null, 2)
 
     // save json to file
     fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
