@@ -1,6 +1,5 @@
 $(document).ready(()=>{
-
-    // *** Switch user in left-bar ***
+    // *** Left-bar ***
     let userType = 'Enquirer'
     // Slide user type while hovering
     $('.user-icon-container').hover(function (){
@@ -43,6 +42,11 @@ $(document).ready(()=>{
     $('#conversation-clear').click(function (){
         $('.conversation-wrapper').empty('')
         console.log('clear')
+    })
+    // tool tips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 
 
