@@ -135,6 +135,7 @@ $(document).ready(()=>{
         }
         console.log(conversation)
 
+        // write down into json file and download
         $.ajax({
             url: '/exportConv',
             type: 'post',
@@ -142,7 +143,11 @@ $(document).ready(()=>{
                 'conversation': JSON.stringify(conversation)
             },
             success: function (res){
-                console.log(res)
+                // download json file
+                let link=document.createElement('a');
+                link.href = res.jsonFile.substr(res.jsonFile.lastIndexOf('/') + 1)
+                link.download = res.jsonFile.substr(res.jsonFile.lastIndexOf('/') + 1)
+                link.click()
             },
             error: function (res){
                 alert('Error')

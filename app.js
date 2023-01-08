@@ -5,7 +5,9 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var fs = require('fs')
 
 app.use(express.static('.'))
+app.use(express.static(__dirname))
 app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/data'))
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
@@ -17,9 +19,7 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
 });
 
 app.post('/exportConv', urlencodedParser, function (req, res){
-    // console.log('Conversation:', req.body);
-    // let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
-    let jsonFileName = 'export.json'
+    let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
     let conversation = JSON.stringify(req.body)
 
     // save json to file
