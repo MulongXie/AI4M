@@ -88,21 +88,11 @@ $(document).ready(()=>{
         let msgInput = $('#msgInput')
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
-            currentDialog.find('.dialog-msg-wrapper').append('<p class="dialog-msg">'+ msgInput.val() +"</p>")
+            currentDialog.find('.dialog-msg-wrapper').append(addMessage(msgInput.val()))
         }
         // else create a new dialog
         else{
-            let dialog =
-                "<div class=\"conversation-dialog dialog-" + userType.toLowerCase() + "\" data-role=\"" + userType + "\">\n" +
-                "    <div class=\"dialog-portrait\">\n" +
-                "        <img src=\"images/" + userType.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
-                "        <p class=\"dialog-portrait-name\">" + userType + "</p>\n" +
-                "    </div>\n" +
-                "    <div class=\"dialog-msg-wrapper\">\n" +
-                "        <p class=\"dialog-msg\">" + msgInput.val() + "</p>\n" +
-                "    </div>\n" +
-                "</div>"
-            convWrapper.append(dialog)
+            convWrapper.append(addDialog(userType, msgInput.val()))
         }
         convWrapper.animate({
             scrollTop: convWrapper.prop('scrollHeight')
@@ -175,4 +165,21 @@ $(document).ready(()=>{
         }
         reader.readAsText(event.target.files[0])
     })
+
+
+    // *** Dialog rendering ***
+    function addMessage(msg){
+        return '<p class="dialog-msg">'+ msg +"</p>"
+    }
+    function addDialog(user, msg){
+        return "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
+            "    <div class=\"dialog-portrait\">\n" +
+            "        <img src=\"images/" + user.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
+            "        <p class=\"dialog-portrait-name\">" + user + "</p>\n" +
+            "    </div>\n" +
+            "    <div class=\"dialog-msg-wrapper\">\n" +
+            "        <p class=\"dialog-msg\">" + msg + "</p>\n" +
+            "    </div>\n" +
+            "</div>"
+    }
 })
