@@ -39,22 +39,27 @@
             <!-- Conversation options -->
             <div class="conversation-opts container">
                 <div class="row">
-                    <div class="col-3 text-center">
+                    <div class="col-4 text-center">
                         <a id="conversation-history" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Conversation history"><i class="bi bi-chat-left-dots-fill"></i></a>
                     </div>
-                    <div class="col-3 text-center">
+                    <div class="col-4 text-center">
+                        <a id="conversation-clear" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Clear Conversation"><i class="bi bi-trash-fill"></i></a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a id="conversation-archive" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive Conversation"><i class="bi bi-archive-fill"></i></a>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-6 text-center">
                         <a id="conversation-export" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Export current conversation"><i class="bi bi-cloud-download-fill"></i></a>
                     </div>
-                    <div class="col-3 text-center">
+                    <div class="col-6 text-center">
                         <form id="importForm">
                             <label for="importInput">
                                 <a id="conversation-import" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Conversation"><i class="bi bi-cloud-upload-fill"></i></a>
                             </label>
                             <input id="importInput" type="file" style="display: none" accept="application/json">
                         </form>
-                    </div>
-                    <div class="col-3 text-center">
-                        <a id="conversation-clear" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Clear Conversation"><i class="bi bi-trash-fill"></i></a>
                     </div>
                 </div>
 

@@ -51,30 +51,38 @@ $(document).ready(()=>{
 
     // *** Click to show the right-bar ***
     // click to show right bar conversation history
-    $('#conversation-history').click(() =>{
+    function showRightBar(){
         let right = $('#right-sidebar')
         let middle = $('#middle-page')
+        right.animate({"margin-right": '+=270'})
+        right.removeClass('hidden')
+        middle.animate({'width': '-=270'})
+    }
+    function hideRightBar(){
+        let right = $('#right-sidebar')
+        let middle = $('#middle-page')
+        right.animate({"margin-right": '-=270'})
+        right.addClass('hidden')
+        middle.animate({'width': '+=270'})
+
+    }
+    $('#conversation-history').click(() =>{
         // hide
-        if (! right.hasClass('hidden')){
-            right.animate({"margin-right": '-=270'})
-            right.addClass('hidden')
-            middle.animate({'width': '+=270'})
+        if (!$('#right-sidebar').hasClass('hidden')){
+            hideRightBar()
         }
         // show
         else {
-            right.animate({"margin-right": '+=270'})
-            right.removeClass('hidden')
-            middle.animate({'width': '-=270'})
+            showRightBar()
         }
     })
     // hide the right bar while clicking on the middle page
     $('#middle-page').click(function (){
         let right = $('#right-sidebar')
-        let middle = $('#middle-page')
         if (! right.hasClass('hidden')){
             right.animate({"margin-right": '-=270'})
             right.addClass('hidden')
-            middle.animate({'width': '+=270'})
+            $(this).animate({'width': '+=270'})
         }
     })
 
