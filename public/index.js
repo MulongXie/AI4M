@@ -47,6 +47,12 @@ $(document).ready(()=>{
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+    // archive conversation
+    $('#conversation-archive').click(function (){
+        let conversation = extractConversationText()
+        $('#right-sidebar').append(addConvCard(conversation))
+        showRightBar()
+    })
 
 
     // *** Click to show the right-bar ***
@@ -54,6 +60,9 @@ $(document).ready(()=>{
     function showRightBar(){
         let right = $('#right-sidebar')
         let middle = $('#middle-page')
+        if (!right.hasClass('hidden')){
+            return
+        }
         right.animate({"margin-right": '+=270'})
         right.removeClass('hidden')
         middle.animate({'width': '-=270'})
@@ -203,6 +212,20 @@ $(document).ready(()=>{
             "</div>"
     }
     // right-side bar
-    function addConvCard(user, msg){
+    function addConvCard(conversation){
+        console.log(conversation)
+        let title = conversation[0].message
+        let user = conversation[0].user
+        let content = conversation[1].message
+        return '<div class="conversation-card">\n' +
+            '    <div class="go-corner">\n' +
+            '        <div class="card-remove">\n' +
+            '            x\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '    <p class="con-card-title">' + title + '</p>\n' +
+            '    <p class="con-card-subtitle">' + user + '</p>\n' +
+            '    <p class="con-card-content">' + content + '</p>\n' +
+            '</div>'
     }
 })

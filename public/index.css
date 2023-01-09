@@ -302,6 +302,7 @@ Font
     display: block;
     position: relative;
     max-width: 262px;
+    max-height: 170px;
     background-color: var(--gray);
     border-radius: 4px;
     padding: 20px;
@@ -360,6 +361,9 @@ Font
     white-space: normal;
     text-overflow: ellipsis;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .go-corner {
@@ -376,7 +380,7 @@ Font
     border-radius: 0 4px 0 32px;
 }
 
-.go-arrow {
+.card-remove {
     margin-top: -4px;
     margin-right: -4px;
     color: white;
