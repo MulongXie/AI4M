@@ -51,11 +51,14 @@ $(document).ready(()=>{
     $('#conversation-archive').click(function (){
         let conversation = extractConversationText()
         $('#right-sidebar').append(addConvCard(conversation))
+        $('.card-remove').click(function (){
+            $(this).parents().closest('.conversation-card').remove()
+        })
         showRightBar()
     })
 
 
-    // *** Click to show the right-bar ***
+    // *** Right-bar ***
     // click to show right bar conversation history
     function showRightBar(){
         let right = $('#right-sidebar')
@@ -93,6 +96,10 @@ $(document).ready(()=>{
             right.addClass('hidden')
             $(this).animate({'width': '+=270'})
         }
+    })
+    $('.card-remove').click(function (){
+        $(this).parents().closest('.conversation-card').remove()
+        console.log($(this).parents().closest('.conversation-card'))
     })
 
 
