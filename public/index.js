@@ -41,7 +41,6 @@ $(document).ready(()=>{
     // clear conversation
     $('#conversation-clear').click(function (){
         $('.conversation-wrapper').empty('')
-        console.log('clear')
     })
     // tool tips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -142,7 +141,6 @@ $(document).ready(()=>{
             }
             conversation.push(dialog)
         }
-        console.log(conversation)
 
         // write down into json file and download
         $.ajax({
@@ -166,8 +164,15 @@ $(document).ready(()=>{
     })
 
     // import conversation Json
-    $('#importInput').change(function (){
+    $('#importInput').change(function (event){
         alert('Import successfully')
-        console.log($(this).prop('files'))
+        let reader = new FileReader()
+        reader.onload = function (e){
+            // read the uploaded file
+            let dialogs = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
+            console.log(dialogs)
+
+        }
+        reader.readAsText(event.target.files[0])
     })
 })
