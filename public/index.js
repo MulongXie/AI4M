@@ -126,8 +126,7 @@ $(document).ready(()=>{
     })
 
     // export conversation
-    $('#conversation-export').click(function (){
-        // extract user and messages
+    function extractConversationText(){
         let convWrapper = $('.conversation-wrapper')
         let conversation = []  // [{'user':, 'message':[]}]
         for (let i = 0; i < convWrapper.children().length; i++){
@@ -139,13 +138,15 @@ $(document).ready(()=>{
             }
             conversation.push(dialog)
         }
-
+        return conversation
+    }
+    $('#conversation-export').click(function (){
         // write down into json file and download
         $.ajax({
             url: '/exportConv',
             type: 'post',
             data: {
-                'conversation': JSON.stringify(conversation)
+                'conversation': JSON.stringify(extractConversationText())
             },
             success: function (res){
                 // download json file
@@ -186,6 +187,7 @@ $(document).ready(()=>{
 
 
     // *** Dialog rendering ***
+    // middle page
     function addMessage(msg){
         return '<p class="dialog-msg">'+ msg +"</p>"
     }
@@ -199,5 +201,8 @@ $(document).ready(()=>{
             "        <p class=\"dialog-msg\">" + msg + "</p>\n" +
             "    </div>\n" +
             "</div>"
+    }
+    // right-side bar
+    function addConvCard(user, msg){
     }
 })

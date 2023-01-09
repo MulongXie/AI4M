@@ -344,11 +344,22 @@ Font
 .con-card-title{
     font-weight: bold;
     font-size: 20px;
+    width: 190px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .con-card-subtitle{
     font-weight: bold;
     color: var(--primary);
+}
+
+.con-card-content{
+    width: 190px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .go-corner {
