@@ -161,9 +161,19 @@ $(document).ready(()=>{
             // read the uploaded file
             let dialogs = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
             console.log(dialogs)
-
+            // load the dialogs to the page
+            let convWrapper = $('.conversation-wrapper')
+            convWrapper.empty()
+            for (let i = 0; i < dialogs.length; i++){
+                let dialog = dialogs[i]
+                convWrapper.append(addDialog(dialog.user, dialog.message[0]))
+                for (let j = 1; j < dialog.message.length; j ++){
+                    $('.dialog-msg-wrapper').last().append(addMessage(dialog.message[j]))
+                }
+            }
         }
         reader.readAsText(event.target.files[0])
+        $(this).val('')
     })
 
 
