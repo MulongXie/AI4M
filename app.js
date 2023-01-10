@@ -3,6 +3,7 @@ const app = express()
 var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var fs = require('fs')
+var path = require('path')
 
 app.use(express.static('.'))
 app.use(express.static(__dirname))
@@ -19,7 +20,8 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
 });
 
 app.post('/exportConv', urlencodedParser, function (req, res){
-    let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
+    // let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
+    let jsonFileName = path.join(__dirname, '/data/conversations', req.body.user.toLowerCase(), req.body.id + '.json')
     let conversation = JSON.stringify(req.body, null, 2)
 
     // save json to file
@@ -27,9 +29,6 @@ app.post('/exportConv', urlencodedParser, function (req, res){
         if (err) throw err;
         console.log('Saved json to ' + jsonFileName);
     })
-    setTimeout(function (){
-        fs.unlinkSync(jsonFileName)
-    }, 5000)
     res.json({jsonFile: jsonFileName});
 })
 

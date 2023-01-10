@@ -163,13 +163,18 @@ $(document).ready(()=>{
             url: '/exportConv',
             type: 'post',
             data: {
+                'id': $('.conversation-wrapper').attr('id'),
+                'user': userType,
                 'conversation': JSON.stringify(extractConversationText())
             },
             success: function (res){
                 // download json file
+                let filePath = res.jsonFile.replace(/\\/g, '/')
+                filePath = filePath.substr(filePath.lastIndexOf('/') + 1)
                 let link=document.createElement('a');
-                link.href = res.jsonFile.substr(res.jsonFile.lastIndexOf('/') + 1)
-                link.download = res.jsonFile.substr(res.jsonFile.lastIndexOf('/') + 1)
+                console.log(filePath)
+                link.href = filePath
+                link.download = filePath
                 link.click()
             },
             error: function (res){
