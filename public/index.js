@@ -49,6 +49,7 @@ $(document).ready(()=>{
     })
     // archive conversation
     $('#conversation-archive').click(function (){
+        // add conversation card in the right-side bar
         let conversation = extractConversationText()
         $('#right-sidebar').append(addConvCard(conversation))
         $('.card-remove').click(function (){
