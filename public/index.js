@@ -288,10 +288,12 @@ $(document).ready(()=>{
     }
     // right-side bar
     function generateConvCard(conversation, convID){
+        //@conversation: [{user:, message:[]}]
         console.log(conversation)
         let title = conversation[0].message
         let user = conversation[0].user
-        let content = conversation[1].message
+        let content = conversation[0].message
+        if (conversation.length > 1) content = conversation[1].message
         return '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
             '    <div class="go-corner">\n' +
             '        <div class="card-remove">\n' +

@@ -27,18 +27,22 @@ app.post('/saveConv', urlencodedParser, function (req, res){
     let conversation = JSON.stringify(req.body, null, 2)
     // save json to file
     fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
-        if (err) throw err;
-        console.log('Saved json to ' + jsonFileName);
+        if (err) console.log(err)
+        else{
+            console.log('Saved json to ' + jsonFileName)
+            res.json({jsonFile: jsonFileName})
+        }
     })
-    res.json({jsonFile: jsonFileName});
 })
 
 app.post('/readConv', urlencodedParser, function (req, res){
     let jsonFileName = path.join(__dirname, '/data/conversations', req.body.user.toLowerCase(), req.body.id + '.json')
     fs.readFile(jsonFileName, 'utf-8',function (err, data){
-        if (err) throw err;
-        console.log('Read json from ' + jsonFileName);
-        res.json(JSON.parse(data))
+        if (err) console.log(err)
+        else {
+            console.log('Read json from ' + jsonFileName);
+            res.json(JSON.parse(data))
+        }
     })
 })
 
