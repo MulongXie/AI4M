@@ -38,9 +38,12 @@ $(document).ready(()=>{
         }
         $('.user-role').text(userType)
     })
-    // clear conversation
-    $('#conversation-clear').click(function (){
-        $('.conversation-wrapper').empty('')
+    // new conversation
+    $('#conversation-new').click(function (){
+        $('.conversation-wrapper').remove()
+        let convID = Date.now()
+        let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper"></div>'
+        $('#middle-page').append(convWrapperHTML)
     })
     // tool tips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
