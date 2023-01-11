@@ -49,13 +49,28 @@ $(document).ready(()=>{
     })
     // archive conversation
     $('#conversation-archive').click(function (){
-        // add conversation card in the right-side bar
-        let conversation = extractConversationText()
-        $('#right-sidebar').append(addConvCard(conversation))
-        $('.card-remove').click(function (){
-            $(this).parents().closest('.conversation-card').remove()
+        let convID = $('.conversation-wrapper').attr('id')
+        // save to backend
+        $.ajax({
+            url: '/saveConv',
+            type: 'post',
+            data: {
+                'id': convID,
+                'user': userType,
+                'conversation': JSON.stringify(extractConversationText())
+            },
+            success: function (res){
+                // if no associated card for the conversation add a new card
+                if ($('.conversation-card[data-conv-target="#' + convID +'"]').length === 0){
+                    addConvCard()
+                }
+                showRightBar()
+            },
+            error: function (res){
+                alert('Error')
+                console.log(res)
+            }
         })
-        showRightBar()
     })
 
 
@@ -78,6 +93,14 @@ $(document).ready(()=>{
         right.addClass('hidden')
         middle.animate({'width': '+=270'})
 
+    }
+    function addConvCard(){
+        // add conversation card in the right-side bar
+        let conversation = extractConversationText()
+        $('#right-sidebar').append(generateConvCard(conversation, $('.conversation-wrapper').attr('id')))
+        $('.card-remove').click(function (){
+            $(this).parents().closest('.conversation-card').remove()
+        })
     }
     $('#conversation-history').click(() =>{
         // hide
@@ -160,7 +183,7 @@ $(document).ready(()=>{
     $('#conversation-export').click(function (){
         // write down into json file and download
         $.ajax({
-            url: '/exportConv',
+            url: '/saveConv',
             type: 'post',
             data: {
                 'id': $('.conversation-wrapper').attr('id'),
@@ -225,12 +248,12 @@ $(document).ready(()=>{
             "</div>"
     }
     // right-side bar
-    function addConvCard(conversation){
+    function generateConvCard(conversation, convID){
         console.log(conversation)
         let title = conversation[0].message
         let user = conversation[0].user
         let content = conversation[1].message
-        return '<div class="conversation-card">\n' +
+        return '<div class="conversation-card" data-conv-target="#' + convID + '">\n' +
             '    <div class="go-corner">\n' +
             '        <div class="card-remove">\n' +
             '            x\n' +

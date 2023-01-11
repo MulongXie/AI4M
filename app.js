@@ -19,19 +19,22 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
     res.json({data: req.body});
 });
 
-app.post('/exportConv', urlencodedParser, function (req, res){
+app.post('/saveConv', urlencodedParser, function (req, res){
     // let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
     let jsonFileName = path.join(__dirname, '/data/conversations', req.body.user.toLowerCase(), req.body.id + '.json')
     let conversation = JSON.stringify(req.body, null, 2)
-
-    // save json to file
-    fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
-        if (err) throw err;
-        console.log('Saved json to ' + jsonFileName);
-    })
+    saveConversation(jsonFileName, conversation)
     res.json({jsonFile: jsonFileName});
 })
 
 app.listen(3333, function (){
     console.log('visit http://localhost:3333/')
 })
+
+function saveConversation(jsonFileName, conversation){
+    // save json to file
+    fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
+        if (err) throw err;
+        console.log('Saved json to ' + jsonFileName);
+    })
+}
