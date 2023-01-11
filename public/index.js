@@ -61,7 +61,7 @@ $(document).ready(()=>{
             },
             success: function (res){
                 // if no associated card for the conversation add a new card
-                if ($('.conversation-card[data-conv-target="#' + convID +'"]').length === 0){
+                if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
                     addConvCard()
                 }
                 showRightBar()
@@ -94,14 +94,6 @@ $(document).ready(()=>{
         middle.animate({'width': '+=270'})
 
     }
-    function addConvCard(){
-        // add conversation card in the right-side bar
-        let conversation = extractConversationText()
-        $('#right-sidebar').append(generateConvCard(conversation, $('.conversation-wrapper').attr('id')))
-        $('.card-remove').click(function (){
-            $(this).parents().closest('.conversation-card').remove()
-        })
-    }
     $('#conversation-history').click(() =>{
         // hide
         if (!$('#right-sidebar').hasClass('hidden')){
@@ -125,6 +117,38 @@ $(document).ready(()=>{
         $(this).parents().closest('.conversation-card').remove()
         console.log($(this).parents().closest('.conversation-card'))
     })
+    function addConvCard(){
+        // add conversation card in the right-side bar
+        let conversation = extractConversationText()
+        $('#right-sidebar').append(generateConvCard(conversation, $('.conversation-wrapper').attr('id')))
+        $('.card-remove').click(function (){
+            $(this).parents().closest('.conversation-card').remove()
+        })
+        clickCardFetchConv()
+    }
+    // click the conv card to fetch the conversation
+    clickCardFetchConv()
+    function clickCardFetchConv(){
+        $('.conversation-card').click(function (){
+            $.ajax({
+                url: '/readConv',
+                type: 'post',
+                data: {
+                    'id': $('.conversation-wrapper').attr('id'),
+                    'user': userType,
+                    'conversation': JSON.stringify(extractConversationText())
+                },
+                success: function (res){
+                    // res: {conversation:[{user:, message:[]}], id:, user:}
+                    generateConversationWrap(res)
+                },
+                error: function (res){
+                    alert('Error')
+                    console.log(res)
+                }
+            })
+        })
+    }
 
 
     // *** conversation transmission ***
@@ -136,11 +160,11 @@ $(document).ready(()=>{
         let msgInput = $('#msgInput')
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
-            currentDialog.find('.dialog-msg-wrapper').append(addMessage(msgInput.val()))
+            currentDialog.find('.dialog-msg-wrapper').append(generateMessage(msgInput.val()))
         }
         // else create a new dialog
         else{
-            convWrapper.append(addDialog(userType, msgInput.val()))
+            convWrapper.append(generateDialog(userType, msgInput.val()))
         }
         convWrapper.animate({
             scrollTop: convWrapper.prop('scrollHeight')
@@ -208,23 +232,27 @@ $(document).ready(()=>{
     })
 
     // import conversation Json
+    function loadConvInWrapper(conversation){
+        // @conversation: [{'user':, 'message':[]}]
+        // load the dialogs to the page
+        let convWrapper = $('.conversation-wrapper')
+        convWrapper.empty()
+        for (let i = 0; i < conversation.length; i++){
+            let dialog = conversation[i]
+            console.log(dialog)
+            convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
+            for (let j = 1; j < dialog.message.length; j ++){
+                $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
+            }
+        }
+    }
     $('#importInput').change(function (event){
         alert('Import successfully')
         let reader = new FileReader()
         reader.onload = function (e){
             // read the uploaded file
-            let dialogs = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
-            console.log(dialogs)
-            // load the dialogs to the page
-            let convWrapper = $('.conversation-wrapper')
-            convWrapper.empty()
-            for (let i = 0; i < dialogs.length; i++){
-                let dialog = dialogs[i]
-                convWrapper.append(addDialog(dialog.user, dialog.message[0]))
-                for (let j = 1; j < dialog.message.length; j ++){
-                    $('.dialog-msg-wrapper').last().append(addMessage(dialog.message[j]))
-                }
-            }
+            let conversation = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
+            loadConvInWrapper(conversation)
         }
         reader.readAsText(event.target.files[0])
         $(this).val('')
@@ -233,10 +261,10 @@ $(document).ready(()=>{
 
     // *** Dialog rendering ***
     // middle page
-    function addMessage(msg){
+    function generateMessage(msg){
         return '<p class="dialog-msg">'+ msg +"</p>"
     }
-    function addDialog(user, msg){
+    function generateDialog(user, msg){
         return "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
             "    <div class=\"dialog-portrait\">\n" +
             "        <img src=\"images/" + user.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
@@ -247,13 +275,21 @@ $(document).ready(()=>{
             "    </div>\n" +
             "</div>"
     }
+    function generateConversationWrap(convInfo){
+        //@convInfo: {conversation:[{user:, message:[]}], id:, user:}
+        let convWrapperHTML = '<div id="' + convInfo.id + '" class="conversation-wrapper"></div>'
+        $('.conversation-wrapper').remove()
+        $('#middle-page').append(convWrapperHTML)
+        console.log(convInfo)
+        loadConvInWrapper(JSON.parse(convInfo.conversation))
+    }
     // right-side bar
     function generateConvCard(conversation, convID){
         console.log(conversation)
         let title = conversation[0].message
         let user = conversation[0].user
         let content = conversation[1].message
-        return '<div class="conversation-card" data-conv-target="#' + convID + '">\n' +
+        return '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
             '    <div class="go-corner">\n' +
             '        <div class="card-remove">\n' +
             '            x\n' +

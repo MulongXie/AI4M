@@ -9,6 +9,8 @@ app.use(express.static('.'))
 app.use(express.static(__dirname))
 app.use(express.static(__dirname + '/public'))
 app.use(express.static(__dirname + '/data'))
+app.use(express.static(__dirname + '/data/conversation'))
+app.use(express.static(__dirname + '/data/conversation/enquirer'))
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
@@ -23,18 +25,23 @@ app.post('/saveConv', urlencodedParser, function (req, res){
     // let jsonFileName = __dirname + '/data/' + Date.now().toString() + '.json'
     let jsonFileName = path.join(__dirname, '/data/conversations', req.body.user.toLowerCase(), req.body.id + '.json')
     let conversation = JSON.stringify(req.body, null, 2)
-    saveConversation(jsonFileName, conversation)
-    res.json({jsonFile: jsonFileName});
-})
-
-app.listen(3333, function (){
-    console.log('visit http://localhost:3333/')
-})
-
-function saveConversation(jsonFileName, conversation){
     // save json to file
     fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
         if (err) throw err;
         console.log('Saved json to ' + jsonFileName);
     })
-}
+    res.json({jsonFile: jsonFileName});
+})
+
+app.post('/readConv', urlencodedParser, function (req, res){
+    let jsonFileName = path.join(__dirname, '/data/conversations', req.body.user.toLowerCase(), req.body.id + '.json')
+    fs.readFile(jsonFileName, 'utf-8',function (err, data){
+        if (err) throw err;
+        console.log('Read json from ' + jsonFileName);
+        res.json(JSON.parse(data))
+    })
+})
+
+app.listen(3333, function (){
+    console.log('visit http://localhost:3333/')
+})
