@@ -40,6 +40,7 @@ $(document).ready(()=>{
     })
     // new conversation
     $('#conversation-new').click(function (){
+        archiveConversation()
         $('.conversation-wrapper').remove()
         let convID = Date.now()
         let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper"></div>'
@@ -51,7 +52,7 @@ $(document).ready(()=>{
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
     // archive conversation
-    $('#conversation-archive').click(function (){
+    function archiveConversation(){
         let convID = $('.conversation-wrapper').attr('id')
         // save to backend
         $.ajax({
@@ -65,15 +66,18 @@ $(document).ready(()=>{
             success: function (res){
                 // if no associated card for the conversation add a new card
                 if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
-                    addConvCard()
+                    // if successfully add card, show the right side bar
+                    if (addConvCard()) showRightBar()
                 }
-                showRightBar()
             },
             error: function (res){
                 alert('Error')
                 console.log(res)
             }
         })
+    }
+    $('#conversation-archive').click(function (){
+        archiveConversation()
     })
 
 
@@ -123,11 +127,13 @@ $(document).ready(()=>{
     function addConvCard(){
         // add conversation card in the right-side bar
         let conversation = extractConversationText()
+        if (conversation.length === 0) return false
         $('#right-sidebar').append(generateConvCard(conversation, $('.conversation-wrapper').attr('id')))
         $('.card-remove').click(function (){
             $(this).parents().closest('.conversation-card').remove()
         })
         clickCardFetchConv()
+        return true
     }
     // click the conv card to fetch the conversation
     clickCardFetchConv()
