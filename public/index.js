@@ -327,5 +327,10 @@ $(document).ready(()=>{
         ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
-
+    $('.option').click(function (){
+        let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
+        console.log(questionTarget)
+        let questionNo = questionTarget.substr(questionTarget.lastIndexOf('-') + 1)
+        alert(questionNo)
+    })
 })
