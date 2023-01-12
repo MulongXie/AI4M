@@ -67,8 +67,9 @@ $(document).ready(()=>{
                 // if no associated card for the conversation add a new card
                 if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
                     // if successfully add card, show the right side bar
-                    if (addConvCard()) showRightBar()
+                    addConvCard()
                 }
+                showRightBar()
             },
             error: function (res){
                 alert('Error')
