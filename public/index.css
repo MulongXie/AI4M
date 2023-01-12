@@ -205,6 +205,7 @@ Font
     margin: 20px auto;
     display: flex;
     box-shadow: rgba(33, 35, 38, 0.2) 0px 10px 10px -10px;
+    padding-bottom: 10px;
 }
 
 .dialog-portrait{
@@ -241,6 +242,25 @@ Font
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 6px;
     display: table;
+}
+
+.dialog-option{
+    margin-top: 25px;
+    padding: 0;
+}
+
+.option{
+    background: var(--gray);
+    padding: 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: dimgray;
+    margin: 5px;
+}
+
+.option:hover{
+    background: var(--third);
+    color: white;
 }
 
 /* Input bar */
