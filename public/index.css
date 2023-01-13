@@ -252,7 +252,7 @@ Font
 
 .option{
     background: var(--gray);
-    padding: 8px;
+    padding: 5px;
     border-radius: 5px;
     text-decoration: none;
     color: dimgray;
@@ -263,10 +263,15 @@ Font
 }
 
 .option:hover{
-    background: var(--third);
+    background: var(--secondary);
     color: white;
     cursor: pointer;
     transition: 0.5s;
+}
+
+.option-active{
+    background: var(--secondary);
+    color: white;
 }
 
 /* Input bar */

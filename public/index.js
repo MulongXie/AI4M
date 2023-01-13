@@ -331,6 +331,7 @@ $(document).ready(()=>{
     askQuestion(0)
     function optionClick(){
         $('.option').click(function (){
+            // popup the next question
             let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
             let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
             let userInputWrapper = $('.input-wrapper')
@@ -340,6 +341,9 @@ $(document).ready(()=>{
             else if (userInputWrapper.is(':hidden')){
                 userInputWrapper.slideDown("fast")
             }
+            // set the clicked option as active
+            $(this).siblings().removeClass('option-active')
+            $(this).addClass('option-active')
         })
     }
     function askQuestion(questionNo){
