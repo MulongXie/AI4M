@@ -276,6 +276,7 @@ Font
     padding-top: 20px;
     position: absolute;
     bottom: 0;
+    display: none;
 }
 
 .input-msg{

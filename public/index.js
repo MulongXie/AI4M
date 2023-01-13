@@ -328,13 +328,17 @@ $(document).ready(()=>{
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
     optionClick()
+    askQuestion(0)
     function optionClick(){
         $('.option').click(function (){
             let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
-            console.log(questionTarget)
             let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
-            if (questionNo < questions.length){
+            let userInputWrapper = $('.input-wrapper')
+            if (questionNo < questions.length - 1){
                 askQuestion(questionNo + 1)
+            }
+            else if (userInputWrapper.is(':hidden')){
+                userInputWrapper.slideDown("fast")
             }
         })
     }
