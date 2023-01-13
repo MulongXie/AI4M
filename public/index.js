@@ -327,10 +327,30 @@ $(document).ready(()=>{
         ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
-    $('.option').click(function (){
-        let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
-        console.log(questionTarget)
-        let questionNo = questionTarget.substr(questionTarget.lastIndexOf('-') + 1)
-        alert(questionNo)
-    })
+    optionClick()
+    function optionClick(){
+        $('.option').click(function (){
+            let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
+            console.log(questionTarget)
+            let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
+            if (questionNo < questions.length){
+                askQuestion(questionNo + 1)
+            }
+        })
+    }
+    function askQuestion(questionNo){
+        let questionWrapper = $('.dialog-question')
+        let msgWrapper = questionWrapper.find('.dialog-msg-wrapper')
+        let question = questions[questionNo]
+        let opts = options[questionNo]
+        let HTMLquestion = '<p id="question-' + questionNo + '" class="dialog-msg">' + question + '</p>\n'
+        let HTMLoptions = '<div class="dialog-option" data-question-target="question-' + questionNo + '"> </div>\n'
+        let optionWrapper = $(HTMLoptions)
+        for (let i = 0; i < opts.length; i ++){
+            optionWrapper.append('<p class="option">' + opts[i] + '</p>')
+        }
+        msgWrapper.append(HTMLquestion)
+        msgWrapper.append(optionWrapper)
+        optionClick()
+    }
 })

@@ -257,11 +257,16 @@ Font
     text-decoration: none;
     color: dimgray;
     margin-right: 8px;
+    white-space: nowrap;
+    display: inline-block;
+    transition: 0.5s;
 }
 
 .option:hover{
     background: var(--third);
     color: white;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 /* Input bar */
