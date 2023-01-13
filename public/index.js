@@ -331,12 +331,19 @@ $(document).ready(()=>{
     askQuestion(0)
     function optionClick(){
         $('.option').click(function (){
-            // popup the next question
             let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
             let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
+            // remove all shown later questions
+            for (let i = questionNo + 1; i < questions.length; i++){
+                $('#question-' + i).remove()
+                $('[data-question-target=question-' + i + ']').remove()
+            }
+            // popup the next question
             let userInputWrapper = $('.input-wrapper')
             if (questionNo < questions.length - 1){
                 askQuestion(questionNo + 1)
+                userInputWrapper.slideUp('fast')
+
             }
             else if (userInputWrapper.is(':hidden')){
                 userInputWrapper.slideDown("fast")
