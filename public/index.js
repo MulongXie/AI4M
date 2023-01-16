@@ -179,6 +179,10 @@ $(document).ready(()=>{
         convWrapper.animate({
             scrollTop: convWrapper.prop('scrollHeight')
         }, 500)
+        // wait for response
+        msgInput.val('')
+        msgInput.attr('disabled','disabled')
+
 
         // * send input message to server through ajax
         e.preventDefault()
@@ -190,7 +194,16 @@ $(document).ready(()=>{
                 'message': msgInput.val()
             },
             success: function (res){
-                msgInput.val('')
+                if (res.code === -1){
+                    alert("Connection to Server Error")
+                }
+                else {
+                    $('.conversation-wrapper').append(generateDialog('Expertise', res.answer))
+                    convWrapper.animate({
+                        scrollTop: convWrapper.prop('scrollHeight')
+                    }, 500)
+                    msgInput.removeAttr('disabled')
+                }
             },
             error: function (res){
                 alert('Error')

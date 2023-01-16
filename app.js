@@ -4,6 +4,8 @@ var bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var fs = require('fs')
 var path = require('path')
+const {Configuration, OpenAIApi} = require("openai");
+const {response} = require("express");
 
 app.use(express.static('.'))
 app.use(express.static(__dirname))
@@ -18,7 +20,15 @@ app.get('/', (req, res) => {
 
 app.post('/sendMsg', urlencodedParser, (req, res) => {
     console.log('Message sending:', req.body);
-    res.json({data: req.body});
+    openaiConnection(req.body.message).then((openaiRes) => {
+        console.log(openaiRes.data)
+        res.json({code:1, answer: openaiRes.data.choices[0].text});
+
+    }).catch((err) =>{
+        console.error(err)
+        res.json({code: -1});
+
+    })
 });
 
 app.post('/saveConv', urlencodedParser, function (req, res){
@@ -49,3 +59,19 @@ app.post('/readConv', urlencodedParser, function (req, res){
 app.listen(3333, function (){
     console.log('visit http://localhost:3333/')
 })
+
+
+// openai chatGPT
+async function openaiConnection(prompt){
+    const { Configuration, OpenAIApi } = require("openai");
+    const configuration = new Configuration({
+        apiKey: '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',
+    });
+    const openai = new OpenAIApi(configuration);
+    return await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        max_tokens: 2000,
+        stream: false
+    });
+}
