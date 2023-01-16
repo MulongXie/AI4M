@@ -180,6 +180,7 @@ $(document).ready(()=>{
             scrollTop: convWrapper.prop('scrollHeight')
         }, 500)
         // wait for response
+        let message = msgInput.val()
         msgInput.val('')
         msgInput.attr('disabled','disabled')
 
@@ -191,7 +192,7 @@ $(document).ready(()=>{
             type: 'post',
             data:{
                 'user': userType,
-                'message': msgInput.val()
+                'message': message
             },
             success: function (res){
                 if (res.code === -1){
@@ -208,6 +209,7 @@ $(document).ready(()=>{
             error: function (res){
                 alert('Error')
                 console.log(res)
+                msgInput.removeAttr('disabled')
             }
         })
     })
