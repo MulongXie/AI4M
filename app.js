@@ -65,7 +65,8 @@ app.listen(3333, function (){
 async function openaiConnection(prompt){
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
-        apiKey: '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',
+        organization: 'org-L4Y94uCZ2IKjOipmkW2HEAsj',
+        apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
     return await openai.createCompletion({
