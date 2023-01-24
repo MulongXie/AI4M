@@ -189,6 +189,10 @@ Font
     position: relative;
 }
 
+.user-page-expertise{
+    display: none;
+}
+
 /* Conversation dialog */
 .conversation-wrapper{
     height: 100vh;

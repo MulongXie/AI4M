@@ -62,26 +62,6 @@
                         </form>
                     </div>
                 </div>
-
-<!--                <nav class="navbar lef-navbar">-->
-<!--                    <ul class="navbar-nav">-->
-<!--                        <li class="my-nav-item">-->
-<!--                            <a class="nav-link">-->
-<!--                                Conversation History-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                        <li class="my-nav-item">-->
-<!--                            <a class="nav-link">-->
-<!--                                Export Conversation-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                        <li class="my-nav-item">-->
-<!--                            <a class="nav-link">-->
-<!--                                Import Conversation-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
             </div>
         </div>
 
@@ -89,45 +69,30 @@
         <div id="chat_container" class="col-10">
             <!-- *** Middle page *** -->
             <div id="middle-page">
-                <!-- conversation -->
-                <div id="conv-0" class="conversation-wrapper">
-                    <div class="conversation-dialog dialog-question" data-role="Expertise">
-                        <div class="dialog-portrait">
-                            <img src="images/expertise.jpg" class="dialog-portrait-img">
-                            <p class="dialog-portrait-name">Expertise</p>
-                        </div>
-                        <div class="dialog-msg-wrapper">
+                <div class="user-page user-page-enquirer">
+                    <!-- conversation -->
+                    <div id="conv-0" class="conversation-wrapper">
+                        <div class="conversation-dialog dialog-question" data-role="Expertise">
+                            <div class="dialog-portrait">
+                                <img src="images/expertise.jpg" class="dialog-portrait-img">
+                                <p class="dialog-portrait-name">Expertise</p>
+                            </div>
+                            <div class="dialog-msg-wrapper">
+                            </div>
                         </div>
                     </div>
-<!--                    <div class="conversation-dialog dialog-enquirer" data-role="Enquirer">-->
-<!--                        <div class="dialog-portrait">-->
-<!--                            <img src="images/enquirer.jpg" class="dialog-portrait-img">-->
-<!--                            <p class="dialog-portrait-name">Enquirer</p>-->
-<!--                        </div>-->
-<!--                        <div class="dialog-msg-wrapper">-->
-<!--                            <p class="dialog-msg">Explain quantum computing in simple terms</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="conversation-dialog dialog-expertise" data-role="Expertise">-->
-<!--                        <div class="dialog-portrait">-->
-<!--                            <img src="images/expertise.jpg" class="dialog-portrait-img">-->
-<!--                            <p class="dialog-portrait-name">Expertise</p>-->
-<!--                        </div>-->
-<!--                        <div class="dialog-msg-wrapper">-->
-<!--                            <p class="dialog-msg">Quantum computing is a type of computing that uses quantum-mechanical phenomena, such as superposition and entanglement, to perform operations on data. It has the potential to solve certain problems much faster than classical computers, which use bits to store and process information.</p>-->
-<!--                            <p class="dialog-msg">In a classical computer, a bit is a unit of information that can have one of two values: 0 or 1. Quantum computers use quantum bits, or qubits, which can represent both 0 and 1 simultaneously. This property, known as superposition, allows quantum computers to perform many calculations at once, potentially making them much faster than classical computers.</p>-->
-<!--                            <p class="dialog-msg">Another important property of quantum computers is entanglement, which allows qubits to be connected in such a way that the state of one qubit can affect the state of another, even if they are separated by large distances. This allows quantum computers to perform certain types of calculations much more efficiently than classical computers.</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!-- Input bar -->
+                    <div class="input-wrapper">
+                        <form id="msgForm" method="post" action="">
+                            <div class="input-group input-msg">
+                                <input required id="msgInput" name="message" type="text" class="form-control" placeholder="Enquiry">
+                                <a class="btn btn-msg" type="submit"><i class="bi bi-send-fill"></i></a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <!-- Input bar -->
-                <div class="input-wrapper">
-                    <form id="msgForm" method="post" action="">
-                        <div class="input-group input-msg">
-                            <input required id="msgInput" name="message" type="text" class="form-control" placeholder="Enquiry">
-                            <a class="btn btn-msg" type="submit"><i class="bi bi-send-fill"></i></a>
-                        </div>
-                    </form>
+                <div class="user-page user-page-expertise">
+                    <h1>Expertise Page</h1>
                 </div>
             </div>
 

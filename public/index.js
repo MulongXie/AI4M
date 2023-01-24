@@ -19,9 +19,9 @@ $(document).ready(()=>{
     })
     // Switch user
     $(document).on('click', '.user-icon-nonselect', function (){
+        // switch user icon on the left nav bar
         $('.user-icon-select').addClass('user-icon-nonselect')
         $('.user-icon-select').removeClass('user-icon-select')
-
         $(this).addClass('user-icon-select')
         $(this).removeClass('user-icon-nonselect')
         if ($(this).hasClass('user-icon-expertise')){
@@ -29,12 +29,22 @@ $(document).ready(()=>{
                 'transform': 'translateX(-37px)'
             })
             userType = 'Expertise'
+
+            // switch user page
+            const slideDelay = 300
+            $('.user-page-enquirer').slideUp(slideDelay)
+            setTimeout(()=>{$('.user-page-expertise').slideDown()}, slideDelay)
         }
         else if ($(this).hasClass('user-icon-enquirer')){
             $(this).css({
                 'transform': 'translateX(37px)'
             })
             userType = 'Enquirer'
+
+            // switch user page
+            const slideDelay = 300
+            $('.user-page-expertise').slideUp(slideDelay)
+            setTimeout(()=>{$('.user-page-enquirer').slideDown()}, slideDelay)
         }
         $('.user-role').text(userType)
     })
