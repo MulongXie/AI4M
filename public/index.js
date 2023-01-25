@@ -29,22 +29,18 @@ $(document).ready(()=>{
                 'transform': 'translateX(-37px)'
             })
             userType = 'Expertise'
-
-            // switch user page
-            toggleExpertisePage(300)
         }
         else if ($(this).hasClass('user-icon-enquirer')){
             $(this).css({
                 'transform': 'translateX(37px)'
             })
             userType = 'Enquirer'
-
-            // switch user page
-            toggleExpertisePage(300)
         }
         $('.user-role').text(userType)
+        // switch user page
+        toggleExpertisePage(300)
     })
-    function toggleExpertisePage(slideDelay){
+    function toggleExpertisePage(slideDelay=300){
         let chatPage = $('.chat-page')
         let expertisePage = $('.enquires-page-expertise')
         if (expertisePage.is(':visible')){
@@ -62,7 +58,7 @@ $(document).ready(()=>{
         $('.conversation-wrapper').remove()
         let convID = Date.now()
         let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper"></div>'
-        $('#middle-page').append(convWrapperHTML)
+        $('.chat-page').append(convWrapperHTML)
     })
     // tool tips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -169,6 +165,7 @@ $(document).ready(()=>{
                 success: function (res){
                     // res: {conversation:[{user:, message:[]}], id:, user:}
                     generateConversationWrap(res)
+                    toggleExpertisePage(300)
                 },
                 error: function (res){
                     alert('Error')
@@ -322,7 +319,7 @@ $(document).ready(()=>{
         //@convInfo: {conversation:[{user:, message:[]}], id:, user:}
         let convWrapperHTML = '<div id="' + convInfo.id + '" class="conversation-wrapper"></div>'
         $('.conversation-wrapper').remove()
-        $('#middle-page').append(convWrapperHTML)
+        $('.chat-page').append(convWrapperHTML)
         console.log(convInfo)
         loadConvInWrapper(JSON.parse(convInfo.conversation))
     }
