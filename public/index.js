@@ -31,9 +31,7 @@ $(document).ready(()=>{
             userType = 'Expertise'
 
             // switch user page
-            const slideDelay = 300
-            $('.user-page-enquirer').slideUp(slideDelay)
-            setTimeout(()=>{$('.user-page-expertise').slideDown()}, slideDelay)
+            toggleExpertisePage(300)
         }
         else if ($(this).hasClass('user-icon-enquirer')){
             $(this).css({
@@ -42,12 +40,22 @@ $(document).ready(()=>{
             userType = 'Enquirer'
 
             // switch user page
-            const slideDelay = 300
-            $('.user-page-expertise').slideUp(slideDelay)
-            setTimeout(()=>{$('.user-page-enquirer').slideDown()}, slideDelay)
+            toggleExpertisePage(300)
         }
         $('.user-role').text(userType)
     })
+    function toggleExpertisePage(slideDelay){
+        let chatPage = $('.chat-page')
+        let expertisePage = $('.enquires-page-expertise')
+        if (expertisePage.is(':visible')){
+            expertisePage.slideUp(slideDelay)
+            setTimeout(()=>{chatPage.slideDown()}, slideDelay)
+        }
+        else{
+            chatPage.slideUp(slideDelay)
+            setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
+        }
+    }
     // new conversation
     $('#conversation-new').click(function (){
         archiveConversation()
