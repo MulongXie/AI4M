@@ -39,6 +39,7 @@ $(document).ready(()=>{
         $('.user-role').text(userType)
         // switch user page
         toggleExpertisePage(300)
+        toggleLeftOpts(300)
     })
     function toggleExpertisePage(slideDelay=300){
         let chatPage = $('.chat-page')
@@ -51,7 +52,6 @@ $(document).ready(()=>{
             chatPage.slideUp(slideDelay)
             setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
         }
-        toggleLeftOpts(slideDelay)
     }
     function toggleLeftOpts(slideDelay=300){
         let optEnquirer = $('.opts-enquirer')
@@ -107,6 +107,10 @@ $(document).ready(()=>{
     }
     $('#conversation-archive').click(function (){
         archiveConversation()
+    })
+    $('#check-enquire').click(function (){
+        $('.chat-page').slideUp(300)
+        setTimeout(()=>{$('.enquires-page-expertise').slideDown()}, 300)
     })
 
 
