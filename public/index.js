@@ -51,7 +51,21 @@ $(document).ready(()=>{
             chatPage.slideUp(slideDelay)
             setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
         }
+        toggleLeftOpts(slideDelay)
     }
+    function toggleLeftOpts(slideDelay=300){
+        let optEnquirer = $('.opts-enquirer')
+        let optExpertise = $('.opts-expertise')
+        if (optExpertise.is(':visible')){
+            optExpertise.slideUp(slideDelay)
+            setTimeout(()=>{optEnquirer.slideDown()}, slideDelay)
+        }
+        else{
+            optEnquirer.slideUp(slideDelay)
+            setTimeout(()=>{optExpertise.slideDown()}, slideDelay)
+        }
+    }
+
     // new conversation
     $('#conversation-new').click(function (){
         archiveConversation()
@@ -245,7 +259,7 @@ $(document).ready(()=>{
         }
         return conversation
     }
-    $('#conversation-export').click(function (){
+    $('.conversation-export').click(function (){
         // write down into json file and download
         $.ajax({
             url: '/saveConv',

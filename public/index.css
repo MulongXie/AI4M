@@ -148,6 +148,9 @@ Font
     color: var(--primary);
 }
 
+.opts-expertise{
+    display: none;
+}
 
 /*.lef-navbar{*/
 /*    position: absolute;*/

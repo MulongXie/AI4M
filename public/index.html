@@ -37,7 +37,7 @@
             </div>
 
             <!-- Conversation options -->
-            <div class="conversation-opts container">
+            <div class="conversation-opts container opts-enquirer">
                 <div class="row">
                     <div class="col-4 text-center">
                         <a id="conversation-history" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Conversation history"><i class="bi bi-clock-history"></i></a>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="row" style="margin-top: 20px">
                     <div class="col-6 text-center">
-                        <a id="conversation-export" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Export current conversation"><i class="bi bi-cloud-download-fill"></i></a>
+                        <a class="conversation-export conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Export current conversation"><i class="bi bi-cloud-download-fill"></i></a>
                     </div>
                     <div class="col-6 text-center">
                         <form id="importForm">
@@ -60,6 +60,16 @@
                             </label>
                             <input id="importInput" type="file" style="display: none" accept="application/json">
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="conversation-opts container opts-expertise">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <a id="check-enquire" class="conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Check Enquires"><i class="bi bi-box-seam-fill"></i></a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <a class="conversation-export conversation-opts-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Export current conversation"><i class="bi bi-cloud-download-fill"></i></a>
                     </div>
                 </div>
             </div>
