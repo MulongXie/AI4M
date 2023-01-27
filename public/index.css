@@ -193,6 +193,17 @@ Font
     display: none;
 }
 
+.enquire-wrapper > .conversation-card{
+    display: inline-table !important;
+    width: 200px !important;
+}
+
+.enquire-wrapper{
+    padding: 20px;
+    transition: 0.5s;
+    text-align: center;
+}
+
 /* Conversation dialog */
 .conversation-wrapper{
     height: 100vh;

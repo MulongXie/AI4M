@@ -166,6 +166,7 @@ $(document).ready(()=>{
                     // res: {conversation:[{user:, message:[]}], id:, user:}
                     generateConversationWrap(res)
                     toggleExpertisePage(300)
+                    $('.input-wrapper').slideDown('fast')
                 },
                 error: function (res){
                     alert('Error')
