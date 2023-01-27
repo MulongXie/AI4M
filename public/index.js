@@ -231,6 +231,7 @@ $(document).ready(()=>{
             success: function (res){
                 if (res.code === -1){
                     alert("Connection to Server Error")
+                    msgInput.removeAttr('disabled')
                 }
                 else {
                     $('.conversation-wrapper').append(generateDialog('Expertise', res.answer))
