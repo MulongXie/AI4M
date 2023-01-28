@@ -27,7 +27,6 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
     }).catch((err) =>{
         console.error(err)
         res.json({code: -1});
-
     })
 });
 

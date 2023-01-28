@@ -231,15 +231,14 @@ $(document).ready(()=>{
             success: function (res){
                 if (res.code === -1){
                     alert("Connection to Server Error")
-                    msgInput.removeAttr('disabled')
                 }
                 else {
                     $('.conversation-wrapper').append(generateDialog('Expertise', res.answer))
                     convWrapper.animate({
                         scrollTop: convWrapper.prop('scrollHeight')
                     }, 500)
-                    msgInput.removeAttr('disabled')
                 }
+                msgInput.removeAttr('disabled')
             },
             error: function (res){
                 alert('Error')
