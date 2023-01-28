@@ -1,4 +1,15 @@
 $(document).ready(()=>{
+    const questions = ["What is your role on the AI4M project?",
+        "Which industry sector is your AI4M project targeted at?",
+        "Which business areas does your AI4M project target?",
+        "What types of AI system are you developing?"]
+
+    const options = [["Lead", "Technician", "Consultant", "Client"],
+        ["Health", "Mining", "Mining", "Law", "Finance", "Agribusiness", "Cyber Security", "Education", "Defence", "Infrastructure", "Manufacturing", "R&D or Innovation", "Environment"],
+        ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
+        ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
+
+
     // *** Left-bar ***
     let userType = 'Enquirer'
     // Slide user type while hovering
@@ -69,10 +80,7 @@ $(document).ready(()=>{
     // new conversation
     $('#conversation-new').click(function (){
         archiveConversation()
-        $('.conversation-wrapper').remove()
-        let convID = Date.now()
-        let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper"></div>'
-        $('.chat-page').append(convWrapperHTML)
+        createNewConvWrapper()
     })
     // tool tips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -195,7 +203,9 @@ $(document).ready(()=>{
     }
 
 
-    // *** conversation transmission ***
+    // ***********
+    // conversation transmission
+    // ***********
     // input message
     $('#msgForm').submit(function (e){
         // * display the input message in the conversation wrapper
@@ -318,8 +328,27 @@ $(document).ready(()=>{
     })
 
 
-    // *** Dialog rendering ***
+    // ***********
+    // Dialog rendering
+    // ***********
     // middle page
+    createNewConvWrapper()
+    function createNewConvWrapper(){
+        $('.conversation-wrapper').remove()
+        let convID = Date.now()
+        let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper">' +
+            '<div class="conversation-dialog dialog-question" data-role="Expertise">' +
+            '    <div class="dialog-portrait">' +
+            '         <img src="images/expertise.jpg" class="dialog-portrait-img">' +
+            '          <p class="dialog-portrait-name">Expertise</p>' +
+            '    </div>' +
+            '    <div class="dialog-msg-wrapper">' +
+            '    </div>' +
+            '</div>' +
+            '</div>'
+        $('.chat-page').append(convWrapperHTML)
+        askQuestion(0)
+    }
     function generateMessage(msg){
         return '<p class="dialog-msg">'+ msg +"</p>"
     }
@@ -366,18 +395,6 @@ $(document).ready(()=>{
     // ***********
     // Chatbot
     // ***********
-    const questions = ["What is your role on the AI4M project?",
-        "Which industry sector is your AI4M project targeted at?",
-        "Which business areas does your AI4M project target?",
-        "What types of AI system are you developing?"]
-
-    const options = [["Lead", "Technician", "Consultant", "Client"],
-        ["Health", "Mining", "Mining", "Law", "Finance", "Agribusiness", "Cyber Security", "Education", "Defence", "Infrastructure", "Manufacturing", "R&D or Innovation", "Environment"],
-        ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
-        ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
-
-    optionClick()
-    askQuestion(0)
     function optionClick(){
         $('.option').click(function (){
             let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
@@ -403,8 +420,7 @@ $(document).ready(()=>{
         })
     }
     function askQuestion(questionNo){
-        let questionWrapper = $('.dialog-question')
-        let msgWrapper = questionWrapper.find('.dialog-msg-wrapper')
+        let msgWrapper = $('.dialog-msg-wrapper')
         let question = questions[questionNo]
         let opts = options[questionNo]
         let HTMLquestion = '<p id="question-' + questionNo + '" class="dialog-msg">' + question + '</p>\n'
