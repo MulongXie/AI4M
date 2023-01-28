@@ -140,7 +140,6 @@ $(document).ready(()=>{
         right.animate({"margin-right": '-=270'})
         right.addClass('hidden')
         middle.animate({'width': '+=270'})
-
     }
     $('#conversation-history').click(() =>{
         // hide
