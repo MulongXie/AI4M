@@ -113,9 +113,6 @@ $(document).ready(()=>{
             }
         })
     }
-    $('#conversation-archive').click(function (){
-        archiveConversation()
-    })
     $('#check-enquire').click(function (){
         $('.chat-page').slideUp(300)
         setTimeout(()=>{$('.enquires-page-expertise').slideDown()}, 300)
