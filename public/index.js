@@ -10,9 +10,16 @@ $(document).ready(()=>{
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
 
-    // *** Left-bar ***
-    let userType = 'Enquirer'
+    // ***********
+    // Left-bar
+    // ***********
+    // tool tips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     // Slide user type while hovering
+    let userType = 'Enquirer'
     $('.user-icon-container').hover(function (){
         $('.user-icon-nonselect.user-icon-expertise').css({
             'transform': 'translateX(40px)'
@@ -29,29 +36,6 @@ $(document).ready(()=>{
         })
     })
     // Switch user
-    $(document).on('click', '.user-icon-nonselect', function (){
-        // switch user icon on the left nav bar
-        $('.user-icon-select').addClass('user-icon-nonselect')
-        $('.user-icon-select').removeClass('user-icon-select')
-        $(this).addClass('user-icon-select')
-        $(this).removeClass('user-icon-nonselect')
-        if ($(this).hasClass('user-icon-expertise')){
-            $(this).css({
-                'transform': 'translateX(-37px)'
-            })
-            userType = 'Expertise'
-        }
-        else if ($(this).hasClass('user-icon-enquirer')){
-            $(this).css({
-                'transform': 'translateX(37px)'
-            })
-            userType = 'Enquirer'
-        }
-        $('.user-role').text(userType)
-        // switch user page
-        toggleExpertisePage(300)
-        toggleLeftOpts(300)
-    })
     function toggleExpertisePage(slideDelay=300){
         let chatPage = $('.chat-page')
         let expertisePage = $('.enquires-page-expertise')
@@ -76,50 +60,55 @@ $(document).ready(()=>{
             setTimeout(()=>{optExpertise.slideDown()}, slideDelay)
         }
     }
-
+    $(document).on('click', '.user-icon-nonselect', function (){
+        // switch user icon on the left nav bar
+        $('.user-icon-select').addClass('user-icon-nonselect')
+        $('.user-icon-select').removeClass('user-icon-select')
+        $(this).addClass('user-icon-select')
+        $(this).removeClass('user-icon-nonselect')
+        if ($(this).hasClass('user-icon-expertise')){
+            $(this).css({
+                'transform': 'translateX(-37px)'
+            })
+            userType = 'Expertise'
+        }
+        else if ($(this).hasClass('user-icon-enquirer')){
+            $(this).css({
+                'transform': 'translateX(37px)'
+            })
+            userType = 'Enquirer'
+        }
+        $('.user-role').text(userType)
+        // switch user page
+        toggleExpertisePage(300)
+        toggleLeftOpts(300)
+    })
     // new conversation
     $('#conversation-new').click(function (){
         archiveConversation()
         createNewConvWrapper()
     })
-    // tool tips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-    // archive conversation
-    function archiveConversation(){
-        let convID = $('.conversation-wrapper').attr('id')
-        // save to backend
-        $.ajax({
-            url: '/saveConv',
-            type: 'post',
-            data: {
-                'id': convID,
-                'user': userType,
-                'conversation': JSON.stringify(extractConversationText())
-            },
-            success: function (res){
-                // if no associated card for the conversation add a new card
-                if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
-                    // if successfully add card, show the right side bar
-                    addConvCard()
-                }
-                showRightBar()
-            },
-            error: function (res){
-                alert('Error')
-                console.log(res)
-            }
-        })
-    }
     $('#check-enquire').click(function (){
         $('.chat-page').slideUp(300)
         setTimeout(()=>{$('.enquires-page-expertise').slideDown()}, 300)
     })
+    // import conversation from file
+    $('#importInput').change(function (event){
+        alert('Import successfully')
+        let reader = new FileReader()
+        reader.onload = function (e){
+            // read the uploaded file
+            let conversation = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
+            loadConvInWrapper(conversation)
+        }
+        reader.readAsText(event.target.files[0])
+        $(this).val('')
+    })
 
 
-    // *** Right-bar ***
+    // ***********
+    // Right-bar
+    // ***********
     // click to show right bar conversation history
     function showRightBar(){
         let right = $('#right-sidebar')
@@ -161,6 +150,11 @@ $(document).ready(()=>{
         $(this).parents().closest('.conversation-card').remove()
         console.log($(this).parents().closest('.conversation-card'))
     })
+
+
+    // ***********
+    // conversation card
+    // ***********
     function addConvCard(){
         // add conversation card in the right-side bar
         let conversation = extractConversationText()
@@ -224,7 +218,6 @@ $(document).ready(()=>{
         msgInput.val('')
         msgInput.attr('disabled','disabled')
 
-
         // * send input message to server through ajax
         e.preventDefault()
         $.ajax({
@@ -253,7 +246,6 @@ $(document).ready(()=>{
             }
         })
     })
-
     // export conversation
     function extractConversationText(){
         let convWrapper = $('.conversation-wrapper')
@@ -295,7 +287,6 @@ $(document).ready(()=>{
             }
         })
     })
-
     // import conversation Json
     function loadConvInWrapper(conversation){
         // @conversation: [{'user':, 'message':[]}]
@@ -311,17 +302,32 @@ $(document).ready(()=>{
             }
         }
     }
-    $('#importInput').change(function (event){
-        alert('Import successfully')
-        let reader = new FileReader()
-        reader.onload = function (e){
-            // read the uploaded file
-            let conversation = JSON.parse(JSON.parse(e.target.result).conversation)  //[{'user':, 'message':[]}]
-            loadConvInWrapper(conversation)
-        }
-        reader.readAsText(event.target.files[0])
-        $(this).val('')
-    })
+    // archive conversation
+    function archiveConversation(){
+        let convID = $('.conversation-wrapper').attr('id')
+        // save to backend
+        $.ajax({
+            url: '/saveConv',
+            type: 'post',
+            data: {
+                'id': convID,
+                'user': userType,
+                'conversation': JSON.stringify(extractConversationText())
+            },
+            success: function (res){
+                // if no associated card for the conversation add a new card
+                if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
+                    // if successfully add card, show the right side bar
+                    addConvCard()
+                }
+                showRightBar()
+            },
+            error: function (res){
+                alert('Error')
+                console.log(res)
+            }
+        })
+    }
 
 
     // ***********
