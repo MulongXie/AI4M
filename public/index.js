@@ -193,7 +193,21 @@ $(document).ready(()=>{
             })
         })
     }
-
+    // load all conversations stored on the backend to cards
+    function loadConvToCard(){
+        $.ajax({
+            url: '/loadAllConv',
+            type: 'post',
+            success: function (res){
+                clickCardFetchConv()
+            },
+            error: function (res){
+                alert('Error while loading conversation to cards')
+                console.log(res)
+            }
+        })
+    }
+    loadConvToCard()
 
     // ***********
     // conversation transmission
