@@ -85,8 +85,7 @@ $(document).ready(()=>{
     })
     // new conversation
     $('#conversation-new').click(function (){
-        archiveConversation()
-        createNewConvWrapper()
+        archiveConversation(true)
     })
     $('#check-enquire').click(function (){
         $('.chat-page').slideUp(300)
@@ -167,21 +166,24 @@ $(document).ready(()=>{
         return true
     }
     // click the conv card to fetch the conversation
-    clickCardFetchConv()
     function clickCardFetchConv(){
         $('.conversation-card').click(function (){
             $.ajax({
                 url: '/readConv',
                 type: 'post',
                 data: {
-                    'id': $('.conversation-wrapper').attr('id'),
+                    'id': $(this).attr('data-conv-target'),
                     'user': userType,
                     'conversation': JSON.stringify(extractConversationText())
                 },
                 success: function (res){
                     // res: {conversation:[{user:, message:[]}], id:, user:}
                     generateConversationWrap(res)
-                    toggleExpertisePage(300)
+                    // hide the expertise page
+                    if(userType === 'Expertise'){
+                        $('.enquires-page-expertise').slideUp(300)
+                        setTimeout(()=>{$('.chat-page').slideDown()}, 300)
+                    }
                     $('.input-wrapper').slideDown('fast')
                 },
                 error: function (res){
@@ -303,7 +305,7 @@ $(document).ready(()=>{
         }
     }
     // archive conversation
-    function archiveConversation(){
+    function archiveConversation(updateConvWrapper=false){
         let convID = $('.conversation-wrapper').attr('id')
         // save to backend
         $.ajax({
@@ -321,6 +323,9 @@ $(document).ready(()=>{
                     addConvCard()
                 }
                 showRightBar()
+                if (updateConvWrapper){
+                    createNewConvWrapper()
+                }
             },
             error: function (res){
                 alert('Error')
