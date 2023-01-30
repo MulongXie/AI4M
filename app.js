@@ -62,7 +62,7 @@ app.post('/loadAllConv', urlencodedParser, function (req, res){
                 // send back conversations after reading all files
                 fileNum += 1
                 if (fileNum === files.length){
-                    res.json(conversations)
+                    res.json({convs: conversations})
                 }
             })
         })

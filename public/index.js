@@ -154,17 +154,6 @@ $(document).ready(()=>{
     // ***********
     // conversation card
     // ***********
-    function addConvCard(){
-        // add conversation card in the right-side bar
-        let conversation = extractConversationText()
-        if (conversation.length === 0) return false
-        $('#right-sidebar').append(generateConvCard(conversation, $('.conversation-wrapper').attr('id')))
-        $('.card-remove').click(function (){
-            $(this).parents().closest('.conversation-card').remove()
-        })
-        clickCardFetchConv()
-        return true
-    }
     // click the conv card to fetch the conversation
     function clickCardFetchConv(){
         $('.conversation-card').click(function (){
@@ -199,8 +188,11 @@ $(document).ready(()=>{
             url: '/loadAllConv',
             type: 'post',
             success: function (res){
-                console.log(res)
-                clickCardFetchConv()
+                // @ res: [{id:'conv-1234', user:, conversation:[]}]
+                let convs = res.convs
+                convs.forEach(function (conv){
+                    generateConvCard(JSON.parse(conv.conversation), conv.id)
+                })
             },
             error: function (res){
                 alert('Error while loading conversation to cards')
@@ -335,7 +327,9 @@ $(document).ready(()=>{
                 // if no associated card for the conversation add a new card
                 if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
                     // if successfully add card, show the right side bar
-                    addConvCard()
+                    let conversation = extractConversationText()
+                    if (conversation.length === 0) return
+                    generateConvCard(conversation, $('.conversation-wrapper').attr('id'))
                 }
                 showRightBar()
                 if (updateConvWrapper){
@@ -396,12 +390,11 @@ $(document).ready(()=>{
     // right-side bar
     function generateConvCard(conversation, convID){
         //@conversation: [{user:, message:[]}]
-        console.log(conversation)
         let title = conversation[0].message
         let user = conversation[0].user
         let content = conversation[0].message
         if (conversation.length > 1) content = conversation[1].message
-        return '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
+        let cardHTML = '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
             '    <div class="go-corner">\n' +
             '        <div class="card-remove">\n' +
             '            x\n' +
@@ -411,6 +404,12 @@ $(document).ready(()=>{
             '    <p class="con-card-subtitle">' + user + '</p>\n' +
             '    <p class="con-card-content">' + content + '</p>\n' +
             '</div>'
+        $('#right-sidebar').append(cardHTML)
+        // link clicking listeners
+        $('.card-remove').click(function (){
+            $(this).parents().closest('.conversation-card').remove()
+        })
+        clickCardFetchConv()
     }
 
 
