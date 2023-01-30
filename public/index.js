@@ -174,6 +174,10 @@ $(document).ready(()=>{
             }
         })
     })
+    // stop firing the parent's onclick while clicking on the child element
+    $(document).on('click', '.conversation-card .card-remove', function (e){
+        e.stopPropagation()
+    })
     // click the conv card to fetch the conversation
     $(document).on('click', '.conversation-card', function (){
         $.ajax({

@@ -54,7 +54,6 @@ app.post('/readConv', urlencodedParser, function (req, res){
 
 app.post('/removeConv', urlencodedParser, function (req, res){
     let jsonFileName = path.join(conversationRoot, req.body.id + '.json')
-    console.log(jsonFileName)
     fs.unlink(jsonFileName, function (err){
         if (err) return console.log(err)
         console.log('Remove file', jsonFileName)
