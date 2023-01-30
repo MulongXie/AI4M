@@ -23,7 +23,6 @@ app.post('/sendMsg', urlencodedParser, (req, res) => {
     openaiConnection(req.body.message).then((openaiRes) => {
         console.log(openaiRes.data)
         res.json({code:1, answer: openaiRes.data.choices[0].text});
-
     }).catch((err) =>{
         console.error(err)
         res.json({code: -1});
@@ -52,15 +51,23 @@ app.post('/readConv', urlencodedParser, function (req, res){
 })
 
 app.post('/loadAllConv', urlencodedParser, function (req, res){
+    let conversations = []
+    let fileNum = 0
     fs.readdir(conversationRoot, function (err, files){
         if (err) return console.log(err)
         files.forEach(function (file){
             fs.readFile(path.join(conversationRoot, file), 'utf-8', function (err,data){
                 if (err) return console.log(err)
-                console.log(JSON.parse(data))
+                conversations.push(JSON.parse(data))
+                // send back conversations after reading all files
+                fileNum += 1
+                if (fileNum === files.length){
+                    res.json(conversations)
+                }
             })
         })
     })
+    // res.json(conversations)
 })
 
 app.listen(3333, function (){
@@ -82,4 +89,7 @@ async function openaiConnection(prompt){
         max_tokens: 2000,
         stream: false
     });
+}
+
+function loadAllConversations(){
 }

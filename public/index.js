@@ -199,6 +199,7 @@ $(document).ready(()=>{
             url: '/loadAllConv',
             type: 'post',
             success: function (res){
+                console.log(res)
                 clickCardFetchConv()
             },
             error: function (res){
