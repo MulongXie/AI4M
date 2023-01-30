@@ -7,6 +7,7 @@ var path = require('path')
 const {Configuration, OpenAIApi} = require("openai");
 const {response} = require("express");
 const url = require("url");
+const {copyFileSync} = require("fs");
 
 const conversationRoot = path.join(__dirname, '/data/conversations')
 
@@ -99,7 +100,4 @@ async function openaiConnection(prompt){
         max_tokens: 2000,
         stream: false
     });
-}
-
-function loadAllConversations(){
 }

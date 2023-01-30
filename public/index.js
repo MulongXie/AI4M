@@ -9,6 +9,12 @@ $(document).ready(()=>{
         ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
+    // ***********
+    // Initial loading
+    // ***********
+    createNewConvWrapper()
+    loadConvToCard()
+
 
     // ***********
     // Left-bar
@@ -151,63 +157,57 @@ $(document).ready(()=>{
     // conversation card
     // ***********
     // remove card and delete conversation file on the backend
-    function clickRemoveConvAndCard(){
-        $('.card-remove').click(function (){
-            let card = $(this).parents().closest('.conversation-card').remove()
-            $.ajax({
-                url: '/removeConv',
-                type: 'post',
-                data: {
-                    id: card.attr('data-conv-target')
-                },
-                success:function (){
-                    card.remove()
-                },
-                error: function (res){
-                    alert('Error when deleting conversation')
-                    console.log(res)
-                }
-            })
-            card.remove()
+    $(document).on('click', '.card-remove', function (){
+        let card = $(this).parents().closest('.conversation-card')
+        $.ajax({
+            url: '/removeConv',
+            type: 'post',
+            data: {
+                id: card.attr('data-conv-target')
+            },
+            success:function (){
+                card.remove()
+            },
+            error: function (res){
+                alert('Error when deleting conversation')
+                console.log(res)
+            }
         })
-    }
+    })
     // click the conv card to fetch the conversation
-    function clickCardFetchConv(){
-        $('.conversation-card').click(function (){
-            $.ajax({
-                url: '/readConv',
-                type: 'post',
-                data: {
-                    'id': $(this).attr('data-conv-target'),
-                    'user': userType,
-                    'conversation': JSON.stringify(extractConversationText())
-                },
-                success: function (res){
-                    // res: {conversation:[{user:, message:[]}], id:, user:}
-                    generateConversationWrap(res)
-                    // hide the expertise page
-                    if(userType === 'Expertise'){
-                        $('.enquires-page-expertise').slideUp(300)
-                        setTimeout(()=>{$('.chat-page').slideDown()}, 300)
-                    }
-                    $('.input-wrapper').slideDown('fast')
-                },
-                error: function (res){
-                    alert('Error')
-                    console.log(res)
+    $(document).on('click', '.conversation-card', function (){
+        $.ajax({
+            url: '/readConv',
+            type: 'post',
+            data: {
+                'id': $(this).attr('data-conv-target'),
+                'user': userType,
+                'conversation': JSON.stringify(extractConversationText())
+            },
+            success: function (res){
+                // res: {conversation:[{user:, message:[]}], id:, user:}
+                generateConversationWrap(res)
+                // hide the expertise page
+                if(userType === 'Expertise'){
+                    $('.enquires-page-expertise').slideUp(300)
+                    setTimeout(()=>{$('.chat-page').slideDown()}, 300)
                 }
-            })
+                $('.input-wrapper').slideDown('fast')
+            },
+            error: function (res){
+                alert('Error')
+                console.log(res)
+            }
         })
-    }
+    })
     // load all conversations stored on the backend to cards
     function loadConvToCard(){
         $.ajax({
             url: '/loadAllConv',
             type: 'post',
             success: function (res){
-                // @ res: [{id:'conv-1234', user:, conversation:[]}]
-                let convs = res.convs
-                convs.forEach(function (conv){
+                // @ res.conv: [{id:'conv-1234', user:, conversation:[]}]
+                res.convs.forEach(function (conv){
                     generateConvCard(JSON.parse(conv.conversation), conv.id)
                 })
             },
@@ -217,7 +217,7 @@ $(document).ready(()=>{
             }
         })
     }
-    loadConvToCard()
+
 
     // ***********
     // conversation transmission
@@ -364,7 +364,6 @@ $(document).ready(()=>{
     // Dialog rendering
     // ***********
     // middle page
-    createNewConvWrapper()
     function createNewConvWrapper(){
         $('.conversation-wrapper').remove()
         let convID = Date.now()
@@ -420,39 +419,34 @@ $(document).ready(()=>{
             '    <p class="con-card-content">' + content + '</p>\n' +
             '</div>'
         $('#right-sidebar').append(cardHTML)
-        // link clicking listeners
-        setTimeout(clickRemoveConvAndCard, 500)
-        setTimeout(clickCardFetchConv, 500)
     }
 
 
     // ***********
     // Chatbot
     // ***********
-    function optionClick(){
-        $('.option').click(function (){
-            let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
-            let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
-            // remove all shown later questions
-            for (let i = questionNo + 1; i < questions.length; i++){
-                $('#question-' + i).remove()
-                $('[data-question-target=question-' + i + ']').remove()
-            }
-            // popup the next question
-            let userInputWrapper = $('.input-wrapper')
-            if (questionNo < questions.length - 1){
-                askQuestion(questionNo + 1)
-                userInputWrapper.slideUp('fast')
+    $(document).on('click','.option', function (){
+        let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
+        let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
+        // remove all shown later questions
+        for (let i = questionNo + 1; i < questions.length; i++){
+            $('#question-' + i).remove()
+            $('[data-question-target=question-' + i + ']').remove()
+        }
+        // popup the next question
+        let userInputWrapper = $('.input-wrapper')
+        if (questionNo < questions.length - 1){
+            askQuestion(questionNo + 1)
+            userInputWrapper.slideUp('fast')
 
-            }
-            else if (userInputWrapper.is(':hidden')){
-                userInputWrapper.slideDown("fast")
-            }
-            // set the clicked option as active
-            $(this).siblings().removeClass('option-active')
-            $(this).addClass('option-active')
-        })
-    }
+        }
+        else if (userInputWrapper.is(':hidden')){
+            userInputWrapper.slideDown("fast")
+        }
+        // set the clicked option as active
+        $(this).siblings().removeClass('option-active')
+        $(this).addClass('option-active')
+    })
     function askQuestion(questionNo){
         let msgWrapper = $('.dialog-msg-wrapper')
         let question = questions[questionNo]
@@ -465,6 +459,5 @@ $(document).ready(()=>{
         }
         msgWrapper.append(HTMLquestion)
         msgWrapper.append(optionWrapper)
-        optionClick()
     }
 })
