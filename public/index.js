@@ -13,7 +13,7 @@ $(document).ready(()=>{
     // Initial loading
     // ***********
     createNewConvWrapper()
-    loadConvToCard()
+    loadAllConvToCards()
 
 
     // ***********
@@ -205,7 +205,7 @@ $(document).ready(()=>{
         })
     })
     // load all conversations stored on the backend to cards
-    function loadConvToCard(){
+    function loadAllConvToCards(){
         $.ajax({
             url: '/loadAllConv',
             type: 'post',
@@ -423,6 +423,7 @@ $(document).ready(()=>{
             '    <p class="con-card-content">' + content + '</p>\n' +
             '</div>'
         $('#right-sidebar').append(cardHTML)
+        $('.enquire-wrapper').append(cardHTML)
     }
 
 
