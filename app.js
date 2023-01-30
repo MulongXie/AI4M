@@ -6,6 +6,7 @@ var fs = require('fs')
 var path = require('path')
 const {Configuration, OpenAIApi} = require("openai");
 const {response} = require("express");
+const url = require("url");
 
 const conversationRoot = path.join(__dirname, '/data/conversations')
 
@@ -50,6 +51,16 @@ app.post('/readConv', urlencodedParser, function (req, res){
     })
 })
 
+app.post('/removeConv', urlencodedParser, function (req, res){
+    let jsonFileName = path.join(conversationRoot, req.body.id + '.json')
+    console.log(jsonFileName)
+    fs.unlink(jsonFileName, function (err){
+        if (err) return console.log(err)
+        console.log('Remove file', jsonFileName)
+        res.json(1)
+    })
+})
+
 app.post('/loadAllConv', urlencodedParser, function (req, res){
     let conversations = []
     let fileNum = 0
@@ -67,7 +78,6 @@ app.post('/loadAllConv', urlencodedParser, function (req, res){
             })
         })
     })
-    // res.json(conversations)
 })
 
 app.listen(3333, function (){

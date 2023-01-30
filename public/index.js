@@ -145,15 +145,32 @@ $(document).ready(()=>{
             $(this).animate({'width': '+=270'})
         }
     })
-    $('.card-remove').click(function (){
-        $(this).parents().closest('.conversation-card').remove()
-        console.log($(this).parents().closest('.conversation-card'))
-    })
 
 
     // ***********
     // conversation card
     // ***********
+    // remove card and delete conversation file on the backend
+    function clickRemoveConvAndCard(){
+        $('.card-remove').click(function (){
+            let card = $(this).parents().closest('.conversation-card').remove()
+            $.ajax({
+                url: '/removeConv',
+                type: 'post',
+                data: {
+                    id: card.attr('data-conv-target')
+                },
+                success:function (){
+                    card.remove()
+                },
+                error: function (res){
+                    alert('Error when deleting conversation')
+                    console.log(res)
+                }
+            })
+            card.remove()
+        })
+    }
     // click the conv card to fetch the conversation
     function clickCardFetchConv(){
         $('.conversation-card').click(function (){
@@ -304,7 +321,6 @@ $(document).ready(()=>{
         convWrapper.empty()
         for (let i = 0; i < conversation.length; i++){
             let dialog = conversation[i]
-            console.log(dialog)
             convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
             for (let j = 1; j < dialog.message.length; j ++){
                 $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
@@ -384,7 +400,6 @@ $(document).ready(()=>{
         let convWrapperHTML = '<div id="' + convInfo.id + '" class="conversation-wrapper"></div>'
         $('.conversation-wrapper').remove()
         $('.chat-page').append(convWrapperHTML)
-        console.log(convInfo)
         loadConvInWrapper(JSON.parse(convInfo.conversation))
     }
     // right-side bar
@@ -406,10 +421,8 @@ $(document).ready(()=>{
             '</div>'
         $('#right-sidebar').append(cardHTML)
         // link clicking listeners
-        $('.card-remove').click(function (){
-            $(this).parents().closest('.conversation-card').remove()
-        })
-        clickCardFetchConv()
+        setTimeout(clickRemoveConvAndCard, 500)
+        setTimeout(clickCardFetchConv, 500)
     }
 
 
