@@ -189,7 +189,7 @@ $(document).ready(()=>{
                 'conversation': JSON.stringify(extractConversationText())
             },
             success: function (res){
-                // res: {conversation:[{user:, message:[]}], id:, user:}
+                // @res: {conversation:[{user:, message:[]}], id:, user:}
                 generateConversationWrap(res)
                 // hide the expertise page
                 if(userType === 'Expertise'){
@@ -262,15 +262,34 @@ $(document).ready(()=>{
                     alert("Connection to Server Error")
                 }
                 else {
-                    $('.conversation-wrapper').append(generateDialog('Expertise', res.answer))
+                    // add the answer to the webpage
+                    convWrapper.append(generateDialog('Expertise', res.answer))
                     convWrapper.animate({
                         scrollTop: convWrapper.prop('scrollHeight')
                     }, 500)
+
+                    // update the conversation file on the backend
+                    $.ajax({
+                        url: '/saveConv',
+                        type: 'post',
+                        data: {
+                            'id': convWrapper.attr('id'),
+                            'user': userType,
+                            'conversation': JSON.stringify(extractConversationText())
+                        },
+                        success: function (res){
+                            generateConvCard(extractConversationText(), $('.conversation-wrapper').attr('id'))
+                        },
+                        error: function (res){
+                            alert('Error in updating backend file')
+                            console.log(res)
+                        }
+                    })
                 }
                 msgInput.removeAttr('disabled')
             },
             error: function (res){
-                alert('Error')
+                alert('Error in sending message')
                 console.log(res)
                 msgInput.removeAttr('disabled')
             }
@@ -408,6 +427,9 @@ $(document).ready(()=>{
     // right-side bar
     function generateConvCard(conversation, convID){
         //@conversation: [{user:, message:[]}]
+        // remove existing card
+        $('.conversation-card[data-conv-target="' + convID +'"]').remove()
+        // generate new conv card
         let title = conversation[0].message
         let user = conversation[0].user
         let content = conversation[0].message

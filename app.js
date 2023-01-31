@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 app.post('/sendMsg', urlencodedParser, (req, res) => {
     console.log('Message sending:', req.body);
     openaiConnection(req.body.message).then((openaiRes) => {
-        console.log(openaiRes.data)
+        // console.log(openaiRes.data)
         res.json({code:1, answer: openaiRes.data.choices[0].text});
     }).catch((err) =>{
         console.error(err)
@@ -90,7 +90,7 @@ async function openaiConnection(prompt){
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
         organization: 'org-L4Y94uCZ2IKjOipmkW2HEAsj',
-        apiKey: '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',
+        apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
     return await openai.createCompletion({
