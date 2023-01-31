@@ -8,6 +8,7 @@ const {Configuration, OpenAIApi} = require("openai");
 const {response} = require("express");
 const url = require("url");
 const {copyFileSync} = require("fs");
+require('dotenv').config()
 
 const conversationRoot = path.join(__dirname, '/data/conversations')
 
@@ -90,7 +91,7 @@ async function openaiConnection(prompt){
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
         organization: 'org-L4Y94uCZ2IKjOipmkW2HEAsj',
-        apiKey: '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',
+        apiKey: process.env.Openai_APIKey,
     });
     const openai = new OpenAIApi(configuration);
     return await openai.createCompletion({
