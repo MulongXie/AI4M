@@ -380,7 +380,9 @@ $(document).ready(()=>{
             let question = $(questionElements[i])
             let options = $('[data-question-target=' + question.attr('id') + ']')
             let selectedOption = options.find('.option-active')
-            console.log(selectedOption.attr('data-opt-no'), selectedOption.text())
+            if (selectedOption.length > 0){
+                questions.push({'q':question.text(), 'a':selectedOption.text()})
+            }
         }
         return questions
     }
@@ -400,7 +402,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(extractConversationText)
+    $('#btn-test').click(extractPreQuestions)
 
 
     // ***********
