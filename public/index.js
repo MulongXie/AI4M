@@ -370,15 +370,26 @@ $(document).ready(()=>{
         let conversation = []  // [{'user':, 'message':[]}]
         for (let i = 0; i < convWrapper.children().length; i++){
             let dialogWrapper = $(convWrapper.children()[i])
-            let messageWrapper = dialogWrapper.find('.dialog-msg')
+            let message = dialogWrapper.find('.dialog-msg')
             let dialog = {'user': dialogWrapper.attr('data-role'), 'message':[]}
-            for (let j = 0; j < messageWrapper.length; j ++){
-                dialog.message.push($(messageWrapper[j]).text())
+            for (let j = 0; j < message.length; j ++){
+                dialog.message.push($(message[j]).text())
             }
             conversation.push(dialog)
         }
         return conversation
     }
+    function extractQuestionOption(){
+        let questionWrapper = $('.dialog-question>.dialog-msg-wrapper')
+        let questions = questionWrapper.find('.msg-question')
+        for (let i = 0; i < questions.length; i++){
+            let question = $(questions[i])
+            let options = $('[data-question-target=' + question.attr('id') + ']')
+            let selectedOption = options.find('.option-active')
+            console.log(selectedOption.attr('data-opt-no'), selectedOption.text())
+        }
+    }
+    $('#btn-test').click(extractQuestionOption)
 
 
     // ***********
@@ -452,7 +463,7 @@ $(document).ready(()=>{
     // Chatbot
     // ***********
     $(document).on('click','.option', function (){
-        let questionTarget = $(this).parents().closest('.dialog-option').attr('data-question-target')
+        let questionTarget = $(this).parents().closest('.msg-option').attr('data-question-target')
         let questionNo = parseInt(questionTarget.substr(questionTarget.lastIndexOf('-') + 1))
         // remove all shown later questions
         for (let i = questionNo + 1; i < questions.length; i++){
@@ -477,11 +488,11 @@ $(document).ready(()=>{
         let msgWrapper = $('.dialog-msg-wrapper')
         let question = questions[questionNo]
         let opts = options[questionNo]
-        let HTMLquestion = '<p id="question-' + questionNo + '" class="dialog-msg">' + question + '</p>\n'
-        let HTMLoptions = '<div class="dialog-option" data-question-target="question-' + questionNo + '"> </div>\n'
+        let HTMLquestion = '<p id="question-' + questionNo + '" class="dialog-msg msg-question">' + question + '</p>\n'
+        let HTMLoptions = '<div class="msg-option" data-question-target="question-' + questionNo + '"> </div>\n'
         let optionWrapper = $(HTMLoptions)
         for (let i = 0; i < opts.length; i ++){
-            optionWrapper.append('<p class="option">' + opts[i] + '</p>')
+            optionWrapper.append('<p class="option" data-opt-no="' + i + '">' + opts[i] + '</p>')
         }
         msgWrapper.append(HTMLquestion)
         msgWrapper.append(optionWrapper)
