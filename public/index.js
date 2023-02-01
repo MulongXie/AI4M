@@ -391,7 +391,7 @@ $(document).ready(()=>{
     function extractDialogs(){
         let dialogs = []
         let convWrapper = $('.conversation-wrapper')
-        for (let i = 0; i < convWrapper.children().length; i++){
+        for (let i = 1; i < convWrapper.children().length; i++){
             let dialogWrapper = $(convWrapper.children()[i])
             let message = dialogWrapper.find('.dialog-msg')
             let dialog = {'user': dialogWrapper.attr('data-role'), 'message':[]}
@@ -402,7 +402,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(extractPreQuestions)
+    $('#btn-test').click(extractDialogs)
 
 
     // ***********
