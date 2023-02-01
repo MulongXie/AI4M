@@ -321,20 +321,6 @@ $(document).ready(()=>{
             }
         })
     })
-    // import conversation Json
-    function loadConvInWrapper(conversation){
-        // @conversation: [{'user':, 'message':[]}]
-        // load the dialogs to the page
-        let convWrapper = $('.conversation-wrapper')
-        convWrapper.empty()
-        for (let i = 0; i < conversation.length; i++){
-            let dialog = conversation[i]
-            convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
-            for (let j = 1; j < dialog.message.length; j ++){
-                $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
-            }
-        }
-    }
     // archive conversation
     function archiveConversation(updateConvWrapper=false){
         let convID = $('.conversation-wrapper').attr('id')
@@ -363,6 +349,20 @@ $(document).ready(()=>{
                 console.log(res)
             }
         })
+    }
+    // import conversation Json
+    function loadConvInWrapper(conversation){
+        // @conversation: [{'user':, 'message':[]}]
+        // load the dialogs to the page
+        let convWrapper = $('.conversation-wrapper')
+        convWrapper.empty()
+        for (let i = 0; i < conversation.length; i++){
+            let dialog = conversation[i]
+            convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
+            for (let j = 1; j < dialog.message.length; j ++){
+                $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
+            }
+        }
     }
     // export conversation
     function extractConversationText(){
