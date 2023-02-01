@@ -91,7 +91,7 @@ $(document).ready(()=>{
     })
     // new conversation
     $('#conversation-new').click(function (){
-        archiveConversation(true)
+        newConversation()
     })
     $('#check-enquire').click(function (){
         $('.chat-page').slideUp(300)
@@ -322,34 +322,37 @@ $(document).ready(()=>{
             }
         })
     })
-    // archive conversation
-    function archiveConversation(updateConvWrapper=false){
-        let convID = $('.conversation-wrapper').attr('id')
-        // save to backend
-        $.ajax({
-            url: '/saveConv',
-            type: 'post',
-            data: {
-                'id': convID,
-                'user': userType,
-                'conversation': JSON.stringify(extractConversationText())
-            },
-            success: function (res){
-                // if no associated card for the conversation add a new card
-                if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
-                    // if successfully add card, show the right side bar
-                    generateConvCard(extractConversationText(), $('.conversation-wrapper').attr('id'))
+    // creat new conversation and save the current one to the backend
+    function newConversation(){
+        let conversation = extractConversationText()   // {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
+        // save to the backend if there are any dialogs
+        if (conversation.dialogs.length > 0){
+            let convID = $('.conversation-wrapper').attr('id')
+            // save to backend
+            $.ajax({
+                url: '/saveConv',
+                type: 'post',
+                data: {
+                    'id': convID,
+                    'user': userType,
+                    'conversation': JSON.stringify(conversation)
+                },
+                success: function (res){
+                    // if no associated card for the conversation add a new card
+                    if ($('.conversation-card[data-conv-target="' + convID +'"]').length === 0){
+                        // if successfully add card, show the right side bar
+                        generateConvCard(conversation, $('.conversation-wrapper').attr('id'))
+                    }
+                },
+                error: function (res){
+                    alert('Error')
+                    console.log(res)
                 }
-                showRightBar()
-                if (updateConvWrapper){
-                    createNewConvWrapper()
-                }
-            },
-            error: function (res){
-                alert('Error')
-                console.log(res)
-            }
-        })
+            })
+            showRightBar()
+        }
+        // refresh page
+        createNewConvWrapper()
     }
 
 
@@ -488,7 +491,6 @@ $(document).ready(()=>{
     // generate brief of the conversation into card
     // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function generateConvCard(conversation, convID){
-        console.log(conversation)
         // remove existing card
         $('.conversation-card[data-conv-target="' + convID +'"]').remove()
         // generate new conv card
