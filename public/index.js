@@ -351,6 +351,11 @@ $(document).ready(()=>{
             }
         })
     }
+
+
+    // ***********
+    // conversation content
+    // ***********
     // import conversation Json
     function loadConvInWrapper(conversation){
         // @conversation: [{'user':, 'message':[]}]
@@ -368,6 +373,7 @@ $(document).ready(()=>{
     // extract the pre-questions and the user dialogs as json data
     // @return conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function extractConversationText(){
+        // console.log({'question':[extractPreQuestions()], 'dialogs':[extractDialogs()]})
         return  {'question':[extractPreQuestions()], 'dialogs':[extractDialogs()]}
     }
     // extract the pre-questions as json data
@@ -402,7 +408,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(extractDialogs)
+    $('#btn-test').click(extractConversationText)
 
 
     // ***********
