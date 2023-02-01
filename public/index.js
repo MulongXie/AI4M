@@ -356,9 +356,9 @@ $(document).ready(()=>{
     // ***********
     // conversation content
     // ***********
-    // import conversation Json
+    // load and present the conversation on the middle page convWrapper
+    // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function loadConvInWrapper(conversation){
-        // @conversation: [{'user':, 'message':[]}]
         // load the dialogs to the page
         let convWrapper = $('.conversation-wrapper')
         convWrapper.empty()
@@ -373,8 +373,8 @@ $(document).ready(()=>{
     // extract the pre-questions and the user dialogs as json data
     // @return conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function extractConversationText(){
-        // console.log({'question':[extractPreQuestions()], 'dialogs':[extractDialogs()]})
-        return  {'question':[extractPreQuestions()], 'dialogs':[extractDialogs()]}
+        // console.log({'question':extractPreQuestions(), 'dialogs':[extractDialogs()]})
+        return  {'questions':extractPreQuestions(), 'dialogs':extractDialogs()}
     }
     // extract the pre-questions as json data
     // @return questions: {'questions':[{'q':, 'a':}]}
@@ -453,16 +453,18 @@ $(document).ready(()=>{
         loadConvInWrapper(JSON.parse(convInfo.conversation))
     }
     // right-side bar
+    // generate brief of the conversation into card
+    // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function generateConvCard(conversation, convID){
-        //@conversation: [{user:, message:[]}]
-        if (conversation.length === 0) return
+        console.log(conversation)
         // remove existing card
         $('.conversation-card[data-conv-target="' + convID +'"]').remove()
         // generate new conv card
-        let title = conversation[0].message
-        let user = conversation[0].user
-        let content = conversation[0].message
-        if (conversation.length > 1) content = conversation[1].message
+        let title = conversation.dialogs[0].message
+        let user = conversation.questions[0].a
+        let content = conversation.dialogs[1].message
+        console.log(conversation.dialogs[0])
+        // if (conversation.length > 1) content = conversation[1].message
         let cardHTML = '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
             '    <div class="go-corner">\n' +
             '        <div class="card-remove">\n' +
