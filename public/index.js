@@ -295,6 +295,7 @@ $(document).ready(()=>{
             }
         })
     })
+    // export conversation
     $('.conversation-export').click(function (){
         // write down into json file and download
         $.ajax({
@@ -364,10 +365,30 @@ $(document).ready(()=>{
             }
         }
     }
-    // export conversation
+    // extract the pre-questions and the user dialogs as json data
+    // @return conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function extractConversationText(){
+        return  {'question':[extractPreQuestions()], 'dialogs':[extractDialogs()]}
+    }
+    // extract the pre-questions as json data
+    // @return questions: {'questions':[{'q':, 'a':}]}
+    function extractPreQuestions(){
+        let questions = []
+        let questionWrapper = $('.dialog-question>.dialog-msg-wrapper')
+        let questionElements = questionWrapper.find('.msg-question')
+        for (let i = 0; i < questionElements.length; i++){
+            let question = $(questionElements[i])
+            let options = $('[data-question-target=' + question.attr('id') + ']')
+            let selectedOption = options.find('.option-active')
+            console.log(selectedOption.attr('data-opt-no'), selectedOption.text())
+        }
+        return questions
+    }
+    // extract the user dialogs as json data
+    // @return questions: {'dialogs':[{'user':, 'message':[]}]}
+    function extractDialogs(){
+        let dialogs = []
         let convWrapper = $('.conversation-wrapper')
-        let conversation = []  // [{'user':, 'message':[]}]
         for (let i = 0; i < convWrapper.children().length; i++){
             let dialogWrapper = $(convWrapper.children()[i])
             let message = dialogWrapper.find('.dialog-msg')
@@ -375,21 +396,11 @@ $(document).ready(()=>{
             for (let j = 0; j < message.length; j ++){
                 dialog.message.push($(message[j]).text())
             }
-            conversation.push(dialog)
+            dialogs.push(dialog)
         }
-        return conversation
+        return dialogs
     }
-    function extractQuestionOption(){
-        let questionWrapper = $('.dialog-question>.dialog-msg-wrapper')
-        let questions = questionWrapper.find('.msg-question')
-        for (let i = 0; i < questions.length; i++){
-            let question = $(questions[i])
-            let options = $('[data-question-target=' + question.attr('id') + ']')
-            let selectedOption = options.find('.option-active')
-            console.log(selectedOption.attr('data-opt-no'), selectedOption.text())
-        }
-    }
-    $('#btn-test').click(extractQuestionOption)
+    $('#btn-test').click(extractConversationText)
 
 
     // ***********
