@@ -359,18 +359,18 @@ $(document).ready(()=>{
     // load and present the conversation on the middle page convWrapper
     // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function loadConvInWrapper(conversation){
-        // load the dialogs to the page
+        // load the pre-questions to the page
         let convWrapper = $('.conversation-wrapper')
         convWrapper.empty()
         convWrapper.append(generateQuestions(conversation.questions))
-
-        // for (let i = 0; i < conversation.length; i++){
-        //     let dialog = conversation[i]
-        //     convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
-        //     for (let j = 1; j < dialog.message.length; j ++){
-        //         $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
-        //     }
-        // }
+        // load the dialogs to the page
+        for (let i = 0; i < conversation.dialogs.length; i++){
+            let dialog = conversation.dialogs[i]
+            convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
+            for (let j = 1; j < dialog.message.length; j ++){
+                $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
+            }
+        }
     }
     // extract the pre-questions and the user dialogs as json data
     // @return conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
@@ -379,7 +379,7 @@ $(document).ready(()=>{
         return  {'questions':extractPreQuestions(), 'dialogs':extractDialogs()}
     }
     // extract the pre-questions as json data
-    // @return questions: {'questions':[{'q':, 'a':}]}
+    // @return questions: [{'q':, 'a':}]
     function extractPreQuestions(){
         let questions = []
         let questionWrapper = $('.dialog-question>.dialog-msg-wrapper')
@@ -395,7 +395,7 @@ $(document).ready(()=>{
         return questions
     }
     // extract the user dialogs as json data
-    // @return dialogs: {'dialogs':[{'user':, 'message':[]}]}
+    // @return dialogs: [{'user':, 'message':[]}]
     function extractDialogs(){
         let dialogs = []
         let convWrapper = $('.conversation-wrapper')
@@ -410,7 +410,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(generateQuestions)
+    // $('#btn-test').click(generateQuestions)
 
 
     // ***********
@@ -433,11 +433,32 @@ $(document).ready(()=>{
         $('.chat-page').append(convWrapperHTML)
         askQuestion(0)
     }
+    function generateMessage(msg){
+        return '<p class="dialog-msg">'+ msg +"</p>"
+    }
+    function generateDialog(user, msg){
+        return "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
+            "    <div class=\"dialog-portrait\">\n" +
+            "        <img src=\"images/" + user.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
+            "        <p class=\"dialog-portrait-name\">" + user + "</p>\n" +
+            "    </div>\n" +
+            "    <div class=\"dialog-msg-wrapper\">\n" +
+            "        <p class=\"dialog-msg\">" + msg + "</p>\n" +
+            "    </div>\n" +
+            "</div>"
+    }
+    function generateConversationWrap(convInfo){
+        //@convInfo: {conversation:[{user:, message:[]}], id:, user:}
+        let convWrapperHTML = '<div id="' + convInfo.id + '" class="conversation-wrapper"></div>'
+        $('.conversation-wrapper').remove()
+        $('.chat-page').append(convWrapperHTML)
+        loadConvInWrapper(JSON.parse(convInfo.conversation))
+    }
     // generate HTML element for the pre-questions and options
     // @param convQuestions: [{'q':, 'a':}]
-    // @return dialogWrapper: the conversation-dialog element that is to be appended on conversation-wrapper
+    // @return questionWrapper: the conversation-dialog element that is to be appended on conversation-wrapper
     function generateQuestions(convQuestions){
-        let dialogWrapper = $('<div class="conversation-dialog dialog-question" data-role="Expertise">' +
+        let questionWrapper = $('<div class="conversation-dialog dialog-question" data-role="Expertise">' +
             '<div class="dialog-portrait">\n' +
             '    <img src="images/expertise.jpg" class="dialog-portrait-img">\n' +
             '    <p class="dialog-portrait-name">Expertise</p>\n' +
@@ -460,29 +481,8 @@ $(document).ready(()=>{
             msgWrapper.append(HTMLquestion)
             msgWrapper.append(optionWrapper)
         }
-        dialogWrapper.append(msgWrapper)
-        return dialogWrapper
-    }
-    function generateMessage(msg){
-        return '<p class="dialog-msg">'+ msg +"</p>"
-    }
-    function generateDialog(user, msg){
-        return "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
-            "    <div class=\"dialog-portrait\">\n" +
-            "        <img src=\"images/" + user.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
-            "        <p class=\"dialog-portrait-name\">" + user + "</p>\n" +
-            "    </div>\n" +
-            "    <div class=\"dialog-msg-wrapper\">\n" +
-            "        <p class=\"dialog-msg\">" + msg + "</p>\n" +
-            "    </div>\n" +
-            "</div>"
-    }
-    function generateConversationWrap(convInfo){
-        //@convInfo: {conversation:[{user:, message:[]}], id:, user:}
-        let convWrapperHTML = '<div id="' + convInfo.id + '" class="conversation-wrapper"></div>'
-        $('.conversation-wrapper').remove()
-        $('.chat-page').append(convWrapperHTML)
-        loadConvInWrapper(JSON.parse(convInfo.conversation))
+        questionWrapper.append(msgWrapper)
+        return questionWrapper
     }
     // right-side bar
     // generate brief of the conversation into card
