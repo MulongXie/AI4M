@@ -491,6 +491,7 @@ $(document).ready(()=>{
     // generate brief of the conversation into card
     // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
     function generateConvCard(conversation, convID){
+        if (conversation.dialogs.length === 0) return
         // remove existing card
         $('.conversation-card[data-conv-target="' + convID +'"]').remove()
         // generate new conv card
