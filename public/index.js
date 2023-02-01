@@ -295,21 +295,6 @@ $(document).ready(()=>{
             }
         })
     })
-    // export conversation
-    function extractConversationText(){
-        let convWrapper = $('.conversation-wrapper')
-        let conversation = []  // [{'user':, 'message':[]}]
-        for (let i = 0; i < convWrapper.children().length; i++){
-            let dialogWrapper = $(convWrapper.children()[i])
-            let messageWrapper = dialogWrapper.find('.dialog-msg')
-            let dialog = {'user': dialogWrapper.attr('data-role'), 'message':[]}
-            for (let j = 0; j < messageWrapper.length; j ++){
-                dialog.message.push($(messageWrapper[j]).text())
-            }
-            conversation.push(dialog)
-        }
-        return conversation
-    }
     $('.conversation-export').click(function (){
         // write down into json file and download
         $.ajax({
@@ -378,6 +363,21 @@ $(document).ready(()=>{
                 console.log(res)
             }
         })
+    }
+    // export conversation
+    function extractConversationText(){
+        let convWrapper = $('.conversation-wrapper')
+        let conversation = []  // [{'user':, 'message':[]}]
+        for (let i = 0; i < convWrapper.children().length; i++){
+            let dialogWrapper = $(convWrapper.children()[i])
+            let messageWrapper = dialogWrapper.find('.dialog-msg')
+            let dialog = {'user': dialogWrapper.attr('data-role'), 'message':[]}
+            for (let j = 0; j < messageWrapper.length; j ++){
+                dialog.message.push($(messageWrapper[j]).text())
+            }
+            conversation.push(dialog)
+        }
+        return conversation
     }
 
 
