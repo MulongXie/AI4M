@@ -354,7 +354,7 @@ $(document).ready(()=>{
 
 
     // ***********
-    // conversation content
+    // conversation content extraction and loading
     // ***********
     // load and present the conversation on the middle page convWrapper
     // @param conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
@@ -362,13 +362,15 @@ $(document).ready(()=>{
         // load the dialogs to the page
         let convWrapper = $('.conversation-wrapper')
         convWrapper.empty()
-        for (let i = 0; i < conversation.length; i++){
-            let dialog = conversation[i]
-            convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
-            for (let j = 1; j < dialog.message.length; j ++){
-                $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
-            }
-        }
+        convWrapper.append(generateQuestions(conversation.questions))
+
+        // for (let i = 0; i < conversation.length; i++){
+        //     let dialog = conversation[i]
+        //     convWrapper.append(generateDialog(dialog.user, dialog.message[0]))
+        //     for (let j = 1; j < dialog.message.length; j ++){
+        //         $('.dialog-msg-wrapper').last().append(generateMessage(dialog.message[j]))
+        //     }
+        // }
     }
     // extract the pre-questions and the user dialogs as json data
     // @return conversation: {'questions':[{'q':, 'a':}], 'dialogs':[{'user':, 'message':[]}]}
@@ -393,7 +395,7 @@ $(document).ready(()=>{
         return questions
     }
     // extract the user dialogs as json data
-    // @return questions: {'dialogs':[{'user':, 'message':[]}]}
+    // @return dialogs: {'dialogs':[{'user':, 'message':[]}]}
     function extractDialogs(){
         let dialogs = []
         let convWrapper = $('.conversation-wrapper')
@@ -408,7 +410,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(extractConversationText)
+    $('#btn-test').click(generateQuestions)
 
 
     // ***********
@@ -430,6 +432,36 @@ $(document).ready(()=>{
             '</div>'
         $('.chat-page').append(convWrapperHTML)
         askQuestion(0)
+    }
+    // generate HTML element for the pre-questions and options
+    // @param convQuestions: [{'q':, 'a':}]
+    // @return dialogWrapper: the conversation-dialog element that is to be appended on conversation-wrapper
+    function generateQuestions(convQuestions){
+        let dialogWrapper = $('<div class="conversation-dialog dialog-question" data-role="Expertise">' +
+            '<div class="dialog-portrait">\n' +
+            '    <img src="images/expertise.jpg" class="dialog-portrait-img">\n' +
+            '    <p class="dialog-portrait-name">Expertise</p>\n' +
+            '</div>' +
+            '</div>')
+        let msgWrapper = $('<div class="dialog-msg-wrapper"></div>')
+
+        for(let i = 0; i < questions.length; i ++){
+            let HTMLquestion = '<p id="question-' + i + '" class="dialog-msg msg-question">' + questions[i] + '</p>\n'
+            let HTMLoptions = '<div class="msg-option" data-question-target="question-' + i + '"> </div>\n'
+            let optionWrapper = $(HTMLoptions)
+            for (let j = 0; j < options[i].length; j ++){
+                if (options[i][j] === convQuestions[i].a){
+                    optionWrapper.append('<p class="option option-active" data-opt-no="' + i + '">' + options[i][j] + '</p>')
+                }
+                else{
+                    optionWrapper.append('<p class="option" data-opt-no="' + i + '">' + options[i][j] + '</p>')
+                }
+            }
+            msgWrapper.append(HTMLquestion)
+            msgWrapper.append(optionWrapper)
+        }
+        dialogWrapper.append(msgWrapper)
+        return dialogWrapper
     }
     function generateMessage(msg){
         return '<p class="dialog-msg">'+ msg +"</p>"
