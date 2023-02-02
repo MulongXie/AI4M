@@ -5,7 +5,7 @@ $(document).ready(()=>{
         "What types of AI system are you developing?"]
 
     const options = [["Lead", "Technician", "Consultant", "Client"],
-        ["Health", "Mining", "Mining", "Law", "Finance", "Agribusiness", "Cyber Security", "Education", "Defence", "Infrastructure", "Manufacturing", "R&D or Innovation", "Environment"],
+        ["Health", "Mining", "Law", "Finance", "Agribusiness", "Cyber Security", "Education", "Defence", "Infrastructure", "Manufacturing", "R&D or Innovation", "Environment"],
         ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
@@ -308,6 +308,11 @@ $(document).ready(()=>{
     })
     // export conversation
     $('.conversation-export').click(function (){
+        let conversation = extractConversationText()
+        if (conversation.dialogs.length === 0){
+            alert("No Enquires yet, please ask questions first")
+            return
+        }
         // write down into json file and download
         $.ajax({
             url: '/saveConv',
@@ -315,7 +320,7 @@ $(document).ready(()=>{
             data: {
                 'id': $('.conversation-wrapper').attr('id'),
                 'user': userType,
-                'conversation': JSON.stringify(extractConversationText())
+                'conversation': JSON.stringify(conversation)
             },
             success: function (res){
                 // download json file
