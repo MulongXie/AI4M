@@ -313,11 +313,16 @@ Font
     background: var(--third);
     transition: 0.5s;
     color: white;
+    padding-top: 14px;
 }
 
 .btn-msg:hover{
     background: #00838d80;
     color: white;
+}
+
+#msgInput{
+    height: 50px;
 }
 
 
