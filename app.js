@@ -10,12 +10,14 @@ const url = require("url");
 const {copyFileSync} = require("fs");
 require('dotenv').config()
 
-const conversationRoot = path.join(__dirname, '/data/conversations')
+const dataDir = '/data/conversations'
+const conversationRoot = path.join(__dirname, dataDir)
 
 app.use(express.static('.'))
 app.use(express.static(__dirname))
 app.use(express.static(__dirname + '/public'))
 app.use(express.static(__dirname + '/data'))
+app.use(express.static(__dirname + '/conversations'))
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
@@ -40,7 +42,7 @@ app.post('/saveConv', urlencodedParser, function (req, res){
     fs.writeFile(jsonFileName, conversation, 'utf-8', function (err) {
         if (err) return console.log(err)
         console.log('Saved json to ' + jsonFileName)
-        res.json({jsonFile: jsonFileName})
+        res.json({jsonFile: path.join(dataDir, req.body.id + '.json')})
     })
 })
 

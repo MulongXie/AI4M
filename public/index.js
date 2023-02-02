@@ -319,11 +319,9 @@ $(document).ready(()=>{
             },
             success: function (res){
                 // download json file
-                let filePath = res.jsonFile.replace(/\\/g, '/')
-                filePath = filePath.substr(filePath.lastIndexOf('/') + 1)
                 let link=document.createElement('a');
-                link.href = filePath
-                link.download = filePath
+                link.href = res.jsonFile
+                link.download = res.jsonFile
                 link.click()
             },
             error: function (res){
@@ -423,7 +421,14 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    // $('#btn-test').click(generateQuestions)
+    $('#btn-test').click(function (){
+        // download json file
+        let filePath = 'data/conversations/conv-1675233290808.json'
+        let link=document.createElement('a');
+        link.href = filePath
+        link.download = filePath
+        link.click()
+    })
 
 
     // ***********
