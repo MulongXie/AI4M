@@ -14,6 +14,7 @@ $(document).ready(()=>{
     // ***********
     createNewConvWrapper()
     loadAllConvToCards()
+    showRightBar()
 
 
     // ***********
@@ -83,10 +84,12 @@ $(document).ready(()=>{
             expertisePage.slideUp(slideDelay)
             setTimeout(()=>{chatPage.slideDown()}, slideDelay)
             createNewConvWrapper()
+            showRightBar()
         }
         else{
             chatPage.slideUp()
             setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
+            hideRightBar()
         }
     })
     // new conversation
@@ -129,6 +132,9 @@ $(document).ready(()=>{
     function hideRightBar(){
         let right = $('#right-sidebar')
         let middle = $('#middle-page')
+        if (right.hasClass('hidden')){
+            return
+        }
         right.animate({"margin-right": '-=270'})
         right.addClass('hidden')
         middle.animate({'width': '+=270'})
