@@ -161,6 +161,24 @@ $(document).ready(()=>{
 
 
     // ***********
+    // Middle page
+    // ***********
+    // click on the expertise's answer to start editing
+    $(document).on('click', '.dialog-expertise>.dialog-msg-wrapper>.dialog-msg', function (){
+        $('.dialog-msg-editing').removeClass('dialog-msg-editing')
+        $(this).addClass('dialog-msg-editing')
+    })
+    // click outside of the dialog-msg-editing to end the editing
+    $(document).on('click', function (event){
+        // end editing
+        if ($(event.target).closest('.dialog-msg-editing').length === 0 &&
+            $('.dialog-msg-editing').length > 0){
+            $('.dialog-msg-editing').removeClass('dialog-msg-editing')
+        }
+    })
+
+
+    // ***********
     // conversation card
     // ***********
     // remove card and delete conversation file on the backend
@@ -449,7 +467,7 @@ $(document).ready(()=>{
         return '<p class="dialog-msg">'+ msg +"</p>"
     }
     function generateDialog(user, msg){
-        return "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
+        let dialogHTML = "<div class=\"conversation-dialog dialog-" + user.toLowerCase() + "\" data-role=\"" + user + "\">\n" +
             "    <div class=\"dialog-portrait\">\n" +
             "        <img src=\"images/" + user.toLowerCase() + ".jpg\" class=\"dialog-portrait-img\">\n" +
             "        <p class=\"dialog-portrait-name\">" + user + "</p>\n" +
@@ -458,6 +476,9 @@ $(document).ready(()=>{
             "        <p class=\"dialog-msg\">" + msg + "</p>\n" +
             "    </div>\n" +
             "</div>"
+        let dialogWrapper = $(dialogHTML)
+        if (user === 'Expertise') dialogWrapper.find('.dialog-msg').attr('contentEditable', true)
+        return dialogWrapper
     }
     function generateConversationWrap(convInfo){
         //@convInfo: {conversation:[{user:, message:[]}], id:, user:}
