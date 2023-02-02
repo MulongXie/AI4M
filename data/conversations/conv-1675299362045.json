@@ -1,0 +1,5 @@
+{
+  "id": "conv-1675299362045",
+  "user": "Enquirer",
+  "conversation": "{\"questions\":[{\"q\":\"What is your role on the AI4M project?\",\"a\":\"Lead\"},{\"q\":\"Which industry sector is your AI4M project targeted at?\",\"a\":\"Health\"},{\"q\":\"Which business areas does your AI4M project target?\",\"a\":\"Customer service\"},{\"q\":\"What types of AI system are you developing?\",\"a\":\"Language processing\"}],\"dialogs\":[{\"user\":\"Enquirer\",\"message\":[\"How are you today\"]},{\"user\":\"Expertise\",\"message\":[\"?'\\n\\nI'm doing great, thanks for asking. How about you?\"]},{\"user\":\"Enquirer\",\"message\":[\"What is the weather in Sydney this weekend\"]},{\"user\":\"Expertise\",\"message\":[\"?\\n\\nThe weather in Sydney this weekend is expected to be partly cloudy with temperatures ranging from 17-27 degrees Celsius (63-81 degrees Fahrenheit).\"]}]}"
+}

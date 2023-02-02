@@ -110,7 +110,6 @@ $(document).ready(()=>{
     })
     // import conversation from file
     $('#importInput').change(function (event){
-        alert('Import successfully')
         let reader = new FileReader()
         reader.onload = function (e){
             // read the uploaded file
@@ -119,6 +118,8 @@ $(document).ready(()=>{
         }
         reader.readAsText(event.target.files[0])
         $(this).val('')
+        alert('Import successfully')
+        $('.input-wrapper').slideDown('fast')
     })
 
 
@@ -426,14 +427,7 @@ $(document).ready(()=>{
         }
         return dialogs
     }
-    $('#btn-test').click(function (){
-        // download json file
-        let filePath = 'data/conversations/conv-1675233290808.json'
-        let link=document.createElement('a');
-        link.href = filePath
-        link.download = filePath
-        link.click()
-    })
+    // $('#btn-test').click(function (){})
 
 
     // ***********
