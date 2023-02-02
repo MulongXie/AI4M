@@ -3,6 +3,7 @@
     --secondary: #edc7b7;
     --third: #00838d;
     --gray: #f2f8f9;
+    --red: lightcoral
 }
 
 body{
@@ -246,6 +247,14 @@ Font
     border: 4px solid var(--secondary);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+/*.dialog-expertise>.dialog-portrait>.dialog-portrait-img{*/
+/*    border: 4px solid var(--red);*/
+/*}*/
+
+/*.dialog-expertise>.dialog-portrait>.dialog-portrait-name{*/
+/*    color: var(--red);*/
+/*}*/
 
 .dialog-msg-wrapper{
     /*background-color: lawngreen;*/

@@ -171,6 +171,7 @@ $(document).ready(()=>{
         if (userType === 'Expertise'){
             $('.dialog-msg-editing').removeClass('dialog-msg-editing')
             $(this).addClass('dialog-msg-editing')
+            $('.bottom-reminder').html('Click on <span style="color: orangered">anywhere outside the answer</span> to finish editing')
         }
     })
     // click outside of the dialog-msg-editing to end the editing
@@ -178,7 +179,9 @@ $(document).ready(()=>{
         // end editing
         if ($(event.target).closest('.dialog-msg-editing').length === 0 &&
             $('.dialog-msg-editing').length > 0){
+            // change style
             $('.dialog-msg-editing').removeClass('dialog-msg-editing')
+            $('.bottom-reminder').html('Click on the <span style="color: orangered">Expertise\'s answer</span> to edit')
             // update backend file if changed
             if (editChange){
                 // update the conversation file on the backend
