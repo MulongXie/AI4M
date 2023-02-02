@@ -26,6 +26,7 @@ $(document).ready(()=>{
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
     // Slide user type while hovering
+    let slideDelay = 300
     let userType = 'Enquirer'
     $('.user-icon-container').hover(function (){
         $('.user-icon-nonselect.user-icon-expertise').css({
@@ -85,6 +86,7 @@ $(document).ready(()=>{
             setTimeout(()=>{chatPage.slideDown()}, slideDelay)
             createNewConvWrapper()
             showRightBar()
+            $('.reminder-wrapper').slideUp(slideDelay)
         }
         else{
             chatPage.slideUp()
@@ -246,12 +248,14 @@ $(document).ready(()=>{
                 generateConversationWrap(res)
                 // hide the expertise page
                 if(userType === 'Expertise'){
-                    $('.enquires-page-expertise').slideUp(300)
-                    setTimeout(()=>{$('.chat-page').slideDown()}, 300)
-                    $('.input-wrapper').slideUp('fast')
+                    $('.enquires-page-expertise').slideUp(slideDelay)
+                    setTimeout(()=>{$('.chat-page').slideDown()}, slideDelay)
+                    $('.input-wrapper').slideUp(slideDelay)
+                    $('.reminder-wrapper').slideDown(slideDelay)
                 }
+                // for enquirer, show input bar
                 else{
-                    $('.input-wrapper').slideDown('fast')
+                    $('.input-wrapper').slideDown(slideDelay)
                 }
             },
             error: function (res){
