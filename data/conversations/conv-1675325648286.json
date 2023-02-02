@@ -1,0 +1,5 @@
+{
+  "id": "conv-1675325648286",
+  "user": "Expertise",
+  "conversation": "{\"questions\":[{\"q\":\"What is your role on the AI4M project?\",\"a\":\"Technician\"},{\"q\":\"Which industry sector is your AI4M project targeted at?\",\"a\":\"Health\"},{\"q\":\"Which business areas does your AI4M project target?\",\"a\":\"Legal, risk and compliance\"},{\"q\":\"What types of AI system are you developing?\",\"a\":\"Recognition systems\"}],\"dialogs\":[{\"user\":\"Enquirer\",\"message\":[\"\\\"In 2017, researchers at the University of Washington used 14 hours of audio and video clips spoken by President Barack Obama to create a deepfake video. One year later, comedian Jordan Peele also created a fake video of Obama to highlight the ease of faking public statements, but used his own voice impression instead.\\\"  Question: what machine learning categories does the system fall into?\"]},{\"user\":\"Expertise\",\"message\":[\"\\n\\nThe machine learning categories of the Deepfake system fall into computer vision, machine learning, natural language processing, and speech recognition and Knowledge graph.\"]}]}"
+}

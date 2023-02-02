@@ -488,6 +488,7 @@ $(document).ready(()=>{
     function createNewConvWrapper(){
         $('.conversation-wrapper').remove()
         let convID = Date.now()
+        // let timeStamp = new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
         let convWrapperHTML = '<div id="conv-' + convID + '" class="conversation-wrapper">' +
             '<div class="conversation-dialog dialog-question" data-role="Expertise">' +
             '    <div class="dialog-portrait">' +
