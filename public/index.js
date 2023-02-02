@@ -42,18 +42,6 @@ $(document).ready(()=>{
         })
     })
     // Switch user
-    function toggleExpertisePage(slideDelay=300){
-        let chatPage = $('.chat-page')
-        let expertisePage = $('.enquires-page-expertise')
-        if (expertisePage.is(':visible')){
-            expertisePage.slideUp(slideDelay)
-            setTimeout(()=>{chatPage.slideDown()}, slideDelay)
-        }
-        else{
-            chatPage.slideUp(slideDelay)
-            setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
-        }
-    }
     function toggleLeftOpts(slideDelay=300){
         let optEnquirer = $('.opts-enquirer')
         let optExpertise = $('.opts-expertise')
@@ -94,6 +82,7 @@ $(document).ready(()=>{
         if (userType === 'Enquirer'){
             expertisePage.slideUp(slideDelay)
             setTimeout(()=>{chatPage.slideDown()}, slideDelay)
+            createNewConvWrapper()
         }
         else{
             chatPage.slideUp()
