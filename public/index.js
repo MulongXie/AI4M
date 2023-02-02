@@ -163,6 +163,7 @@ $(document).ready(()=>{
     // ***********
     // Middle page
     // ***********
+    let editChange = false
     // click on the expertise's answer to start editing
     $(document).on('click', '.dialog-expertise>.dialog-msg-wrapper>.dialog-msg', function (){
         $('.dialog-msg-editing').removeClass('dialog-msg-editing')
@@ -174,7 +175,32 @@ $(document).ready(()=>{
         if ($(event.target).closest('.dialog-msg-editing').length === 0 &&
             $('.dialog-msg-editing').length > 0){
             $('.dialog-msg-editing').removeClass('dialog-msg-editing')
+            // update backend file if changed
+            if (editChange){
+                // update the conversation file on the backend
+                $.ajax({
+                    url: '/saveConv',
+                    type: 'post',
+                    data: {
+                        'id': $('.conversation-wrapper').attr('id'),
+                        'user': userType,
+                        'conversation': JSON.stringify(extractConversationText())
+                    },
+                    success: function (res){
+                        generateConvCard(extractConversationText(), $('.conversation-wrapper').attr('id'))
+                    },
+                    error: function (res){
+                        alert('Error in updating backend file')
+                        console.log(res)
+                    }
+                })
+                editChange = false
+            }
         }
+    })
+    // monitor if any changes
+    $(document).on('input', '.dialog-msg-editing', function (){
+        editChange = true
     })
 
 
