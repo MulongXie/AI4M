@@ -166,8 +166,10 @@ $(document).ready(()=>{
     let editChange = false
     // click on the expertise's answer to start editing
     $(document).on('click', '.dialog-expertise>.dialog-msg-wrapper>.dialog-msg', function (){
-        $('.dialog-msg-editing').removeClass('dialog-msg-editing')
-        $(this).addClass('dialog-msg-editing')
+        if (userType === 'Expertise'){
+            $('.dialog-msg-editing').removeClass('dialog-msg-editing')
+            $(this).addClass('dialog-msg-editing')
+        }
     })
     // click outside of the dialog-msg-editing to end the editing
     $(document).on('click', function (event){
@@ -246,8 +248,11 @@ $(document).ready(()=>{
                 if(userType === 'Expertise'){
                     $('.enquires-page-expertise').slideUp(300)
                     setTimeout(()=>{$('.chat-page').slideDown()}, 300)
+                    $('.input-wrapper').slideUp('fast')
                 }
-                $('.input-wrapper').slideDown('fast')
+                else{
+                    $('.input-wrapper').slideDown('fast')
+                }
             },
             error: function (res){
                 alert('Error')
@@ -503,7 +508,13 @@ $(document).ready(()=>{
             "    </div>\n" +
             "</div>"
         let dialogWrapper = $(dialogHTML)
-        if (user === 'Expertise') dialogWrapper.find('.dialog-msg').attr('contentEditable', true)
+        // make the answer editable for expertise
+        if (userType === 'Expertise' && user === 'Expertise'){
+            dialogWrapper.find('.dialog-msg').attr('contentEditable', true)
+            dialogWrapper.find('.dialog-msg').attr('data-bs-toggle', 'tooltip')
+            dialogWrapper.find('.dialog-msg').attr('data-bs-placement', 'top')
+            dialogWrapper.find('.dialog-msg').attr('title', 'Click to edit answer')
+        }
         return dialogWrapper
     }
     function generateConversationWrap(convInfo){
@@ -586,7 +597,6 @@ $(document).ready(()=>{
         if (questionNo < questions.length - 1){
             askQuestion(questionNo + 1)
             userInputWrapper.slideUp('fast')
-
         }
         else if (userInputWrapper.is(':hidden')){
             userInputWrapper.slideDown("fast")
