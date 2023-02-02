@@ -67,6 +67,7 @@ $(document).ready(()=>{
         }
     }
     $(document).on('click', '.user-icon-nonselect', function (){
+        let slideDelay = 300
         // switch user icon on the left nav bar
         $('.user-icon-select').addClass('user-icon-nonselect')
         $('.user-icon-select').removeClass('user-icon-select')
@@ -85,9 +86,19 @@ $(document).ready(()=>{
             userType = 'Enquirer'
         }
         $('.user-role').text(userType)
-        // switch user page
-        toggleExpertisePage(300)
+        // switch user options
         toggleLeftOpts(300)
+        // switch expertise enquires page
+        let chatPage = $('.chat-page')
+        let expertisePage = $('.enquires-page-expertise')
+        if (userType === 'Enquirer'){
+            expertisePage.slideUp(slideDelay)
+            setTimeout(()=>{chatPage.slideDown()}, slideDelay)
+        }
+        else{
+            chatPage.slideUp()
+            setTimeout(()=>{expertisePage.slideDown()}, slideDelay)
+        }
     })
     // new conversation
     $('#conversation-new').click(function (){
@@ -311,7 +322,6 @@ $(document).ready(()=>{
                 let filePath = res.jsonFile.replace(/\\/g, '/')
                 filePath = filePath.substr(filePath.lastIndexOf('/') + 1)
                 let link=document.createElement('a');
-                console.log(filePath)
                 link.href = filePath
                 link.download = filePath
                 link.click()
@@ -498,7 +508,6 @@ $(document).ready(()=>{
         let title = conversation.dialogs[0].message
         let user = conversation.questions[0].a
         let content = conversation.dialogs[1].message
-        console.log(conversation.dialogs[0])
         // if (conversation.length > 1) content = conversation[1].message
         let cardHTML = '<div class="conversation-card" data-conv-target="' + convID + '">\n' +
             '    <div class="go-corner">\n' +
