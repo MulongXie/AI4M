@@ -295,6 +295,7 @@ $(document).ready(()=>{
         let currentDialog = $('.conversation-dialog').last()
         let convWrapper = $('.conversation-wrapper')
         let msgInput = $('#msgInput')
+        let sendBtn = $('.btn-msg')
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
             currentDialog.find('.dialog-msg-wrapper').append(generateMessage(msgInput.val()))
@@ -310,6 +311,9 @@ $(document).ready(()=>{
         let message = msgInput.val()
         msgInput.val('')
         msgInput.attr('disabled','disabled')
+        msgInput.attr('placeholder', 'Waiting for response ...')
+        sendBtn.attr('disabled','disabled')
+        sendBtn.html('<i class="bi bi-three-dots"></i>')
 
         // * send input message to server through ajax
         e.preventDefault()
@@ -342,6 +346,10 @@ $(document).ready(()=>{
                         },
                         success: function (res){
                             generateConvCard(extractConversationText(), $('.conversation-wrapper').attr('id'))
+                            msgInput.removeAttr('disabled')
+                            msgInput.attr('placeholder', 'Ask something')
+                            $('.btn-msg').removeAttr('disabled')
+                            sendBtn.html('<i class="bi bi-send-fill"></i>')
                         },
                         error: function (res){
                             alert('Error in updating backend file')
@@ -349,7 +357,6 @@ $(document).ready(()=>{
                         }
                     })
                 }
-                msgInput.removeAttr('disabled')
             },
             error: function (res){
                 alert('Error in sending message')
