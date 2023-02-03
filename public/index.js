@@ -607,6 +607,9 @@ $(document).ready(()=>{
             $('#question-' + i).remove()
             $('[data-question-target=question-' + i + ']').remove()
         }
+        // remove all questions and answers
+        $('.dialog-enquirer').remove()
+        $('.dialog-expertise').remove()
         // popup the next question
         let userInputWrapper = $('.input-wrapper')
         if (questionNo < questions.length - 1){
@@ -621,7 +624,7 @@ $(document).ready(()=>{
         $(this).addClass('option-active')
     })
     function askQuestion(questionNo){
-        let msgWrapper = $('.dialog-msg-wrapper')
+        let msgWrapper = $('.dialog-question>.dialog-msg-wrapper')
         let question = questions[questionNo]
         let opts = options[questionNo]
         let HTMLquestion = '<p id="question-' + questionNo + '" class="dialog-msg msg-question">' + question + '</p>\n'
