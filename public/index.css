@@ -341,6 +341,15 @@ Font
     height: 50px;
 }
 
+/* addons */
+.addon{
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+.addon-principle{
+    color: white;
+}
 
 /* bottom bar */
 .reminder-wrapper{

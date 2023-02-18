@@ -307,7 +307,7 @@ $(document).ready(()=>{
         let msgInput = $('#msgInput')
         let sendBtn = $('.btn-msg')
 
-        let message = msgInput.val()
+        let message = addonEnquiry(msgInput.val())
 
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
@@ -647,5 +647,12 @@ $(document).ready(()=>{
         }
         msgWrapper.append(HTMLquestion)
         msgWrapper.append(optionWrapper)
+    }
+
+    function addonEnquiry(enquiryMsg){
+        const principleNo = Math.floor(Math.random() * principles.length)
+        const addOn = '<span class="addon"> What are the responsible AI risks in terms of <span class="addon-principle">' + principles[principleNo] + '</span> principle? ' +
+            'For example, how to ' + principleQuestion[principleNo] + '?</span>'
+        return enquiryMsg + addOn
     }
 })
