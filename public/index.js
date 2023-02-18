@@ -9,6 +9,16 @@ $(document).ready(()=>{
         ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
         ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
 
+    const principles = ['Well-bing', 'Values', 'Fairness', 'Privacy and Security', 'Reliability', 'Transparency', 'Contestability', 'Accountability']
+    const principleQuestion = ['establish mechanisms to measure the environmental impact of the AI system’s development, deployment and use (for example the type of energy used by the data centres)',
+        'build up awareness/assessment on fundamental rights of users/ impact groups/wider community',
+        'test (using tools) for bias testing e.g., gender-based testing, minority group testing',
+        'discuss the need of personal data, limited access to such personal data, impact of using personal data etc.',
+        'define assessments on the vulnerabilities',
+        'avoid the lack of understanding around the level of task complexity of the AI system',
+        'prevent the absence of a cost effective/easy method to appeal a decision made by your system',
+        'make the AI system offer enough resources to go through an audit process']
+
     // ***********
     // Initial loading
     // ***********
@@ -296,19 +306,21 @@ $(document).ready(()=>{
         let convWrapper = $('.conversation-wrapper')
         let msgInput = $('#msgInput')
         let sendBtn = $('.btn-msg')
+
+        let message = msgInput.val()
+
         // if send from the same user, append message in current dialog
         if (currentDialog.attr('data-role') === userType){
-            currentDialog.find('.dialog-msg-wrapper').append(generateMessage(msgInput.val()))
+            currentDialog.find('.dialog-msg-wrapper').append(generateMessage(message))
         }
         // else create a new dialog
         else{
-            convWrapper.append(generateDialog(userType, msgInput.val()))
+            convWrapper.append(generateDialog(userType, message))
         }
         convWrapper.animate({
             scrollTop: convWrapper.prop('scrollHeight')
         }, 500)
         // wait for response
-        let message = msgInput.val()
         msgInput.val('')
         msgInput.attr('disabled','disabled')
         msgInput.attr('placeholder', 'Waiting for response ...')
