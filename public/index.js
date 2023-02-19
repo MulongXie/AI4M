@@ -1,13 +1,11 @@
 $(document).ready(()=>{
-    const questions = ["What is your role on the AI4M project?",
-        "Which industry sector is your AI4M project targeted at?",
-        "Which business areas does your AI4M project target?",
-        "What types of AI system are you developing?"]
+    const questions = ["Which type of stakeholder are you?",
+        "Which industry sector are you from?",
+        "What type of AI technology is involved?"]
 
-    const options = [["Lead", "Technician", "Consultant", "Client"],
+    const options = [["Manager", "Technician", "Consultant", "Client", "Board Member", "Regulator", 'Investor'],
         ["Health", "Mining", "Law", "Finance", "Agribusiness", "Cyber Security", "Education", "Defence", "Infrastructure", "Manufacturing", "R&D or Innovation", "Environment"],
-        ["Accounting and finance", "Customer service", "Human resources", "IT", "Legal, risk and compliance", "Supply chain", "Marketing", "Research and development", "Sales", "Strategy", "Other"],
-        ["Recognition systems", "Language processing", "Automated decision making", "Recommender systems", "Computer vision", "Other"]]
+        ["Machine leaning", "Language processing", "Robotics", "Knowledge representation", "Computer vision", "Do not know"]]
 
     const principles = ['Well-bing', 'Values', 'Fairness', 'Privacy and Security', 'Reliability', 'Transparency', 'Contestability', 'Accountability']
     const principleQuestion = ['establish mechanisms to measure the environmental impact of the AI system’s development, deployment and use (for example the type of energy used by the data centres)',
@@ -17,7 +15,15 @@ $(document).ready(()=>{
         'define assessments on the vulnerabilities',
         'avoid the lack of understanding around the level of task complexity of the AI system',
         'prevent the absence of a cost effective/easy method to appeal a decision made by your system',
-        'make the AI system offer enough resources to go through an audit process']
+        'Who is accountable for the accuracy of the answers']
+    const raiKeywords = principles.concat(['Vulnerability', 'Privacy', 'Regulatory', 'Safety', 'bias', 'accountability'])
+    const principleIds = ['w2', 'v3', 'f4', 'p1', 'r6', 't8', 'c3', 'a7']
+    const raiLinks = ['https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/continuous-rai-validator/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/rai-risk-assessment/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/fairness-measurement/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/random-noise-data-generator/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/multi-model-decision-maker/'
+        ]
 
     // ***********
     // Initial loading
@@ -341,8 +347,10 @@ $(document).ready(()=>{
                     alert("Connection to Server Error")
                 }
                 else {
+                    // add addon to the answer
+                    let answer = addonAnswer(res.answer)
                     // add the answer to the webpage
-                    convWrapper.append(generateDialog('Expertise', res.answer))
+                    convWrapper.append(generateDialog('Expertise', answer))
                     convWrapper.animate({
                         scrollTop: convWrapper.prop('scrollHeight')
                     }, 500)
@@ -649,10 +657,30 @@ $(document).ready(()=>{
         msgWrapper.append(optionWrapper)
     }
 
+    let firstQuestion = true
     function addonEnquiry(enquiryMsg){
-        const principleNo = Math.floor(Math.random() * principles.length)
-        const addOn = '<span class="addon"> What are the responsible AI risks in terms of <span class="addon-principle">' + principles[principleNo] + '</span> principle? ' +
-            'For example, how to ' + principleQuestion[principleNo] + '?</span>'
+        let principleNo = Math.floor(Math.random() * principles.length)
+        if (firstQuestion){
+            principleNo = 7
+            firstQuestion = false
+        }
+        let addOn = '<span class="addon"> What are the responsible AI risks in terms of <span class="addon-principle">' + principles[principleNo] + '</span> principle? '
+        if (principleNo === 7){
+            addOn += principleQuestion[principleNo] + '?</span>'
+        }
+        else{
+            addOn += "How to " + principleQuestion[principleNo] + '?</span>'
+        }
         return enquiryMsg + addOn
+    }
+    function addonAnswer(answerMsg){
+        let addOnAnswerMsg = answerMsg.substring(2).replaceAll('\n', '<br>')
+        console.log(answerMsg)
+        for (let i = 0; i < raiKeywords.length; i++){
+            if (addOnAnswerMsg.includes(raiKeywords[i])){
+                addOnAnswerMsg = addOnAnswerMsg.replaceAll(raiKeywords[i],'<a class="addon-link" href="https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue">' + raiKeywords[i] + '</a>')
+            }
+        }
+        return addOnAnswerMsg
     }
 })

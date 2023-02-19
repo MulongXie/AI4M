@@ -351,6 +351,14 @@ Font
     color: white;
 }
 
+.addon-link{
+    color: lightcoral;
+}
+
+.addon-link:hover{
+    color: var(--secondary);
+}
+
 /* bottom bar */
 .reminder-wrapper{
     width: 100%;
