@@ -345,6 +345,7 @@ Font
 .addon{
     font-weight: bold;
     color: var(--secondary);
+    text-decoration: none;
 }
 
 .addon-principle{

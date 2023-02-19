@@ -16,13 +16,24 @@ $(document).ready(()=>{
         'avoid the lack of understanding around the level of task complexity of the AI system',
         'prevent the absence of a cost effective/easy method to appeal a decision made by your system',
         'Who is accountable for the accuracy of the answers']
-    const raiKeywords = principles.concat(['Vulnerability', 'Privacy', 'Regulatory', 'Safety', 'bias', 'accountability'])
+    const raiKeywords = principles.concat(['Vulnerability', 'Privacy', 'Regulatory', 'Safety', 'bias', 'accountability', 'privacy', 'security'])
     const principleIds = ['w2', 'v3', 'f4', 'p1', 'r6', 't8', 'c3', 'a7']
     const raiLinks = ['https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/continuous-rai-validator/',
         'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/rai-risk-assessment/',
         'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/fairness-measurement/',
         'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/random-noise-data-generator/',
-        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/multi-model-decision-maker/'
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/multi-model-decision-maker/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/standardized-reporting/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/ai-mode-switcher/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/role-level-accountability/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/role-level-accountability/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/random-noise-data-generator/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/xai-interface/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/rai-black-box/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/standardized-reporting/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/role-level-accountability/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/random-noise-data-generator/',
+        'https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue/random-noise-data-generator/'
         ]
 
     // ***********
@@ -664,7 +675,7 @@ $(document).ready(()=>{
             principleNo = 7
             firstQuestion = false
         }
-        let addOn = '<span class="addon"> What are the responsible AI risks in terms of <span class="addon-principle">' + principles[principleNo] + '</span> principle? '
+        let addOn = '<a class="addon" data-bs-toggle="tooltip" data-bs-placement="top" title="Question Bank ID:' + principleIds[principleNo].toUpperCase() + '"> What are the responsible AI risks in terms of <span class="addon-principle">' + principles[principleNo] + '</span> principle? '
         if (principleNo === 7){
             addOn += principleQuestion[principleNo] + '?</span>'
         }
@@ -678,7 +689,7 @@ $(document).ready(()=>{
         console.log(answerMsg)
         for (let i = 0; i < raiKeywords.length; i++){
             if (addOnAnswerMsg.includes(raiKeywords[i])){
-                addOnAnswerMsg = addOnAnswerMsg.replaceAll(raiKeywords[i],'<a class="addon-link" href="https://research.csiro.au/ss/science/projects/responsible-ai-pattern-catalogue">' + raiKeywords[i] + '</a>')
+                addOnAnswerMsg = addOnAnswerMsg.replaceAll(raiKeywords[i],'<a class="addon-link" href="' + raiLinks[i] + '">' + raiKeywords[i] + '</a>')
             }
         }
         return addOnAnswerMsg
